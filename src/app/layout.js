@@ -17,6 +17,9 @@ export const metadata = {
   description: "Nightlife Experience Coming Soon! Get Ready to Experience the Night! Opening June 20, 2025. Join us for an unforgettable journey into the world of nightlife. Stay tuned for updates and sneak peeks of what we have in store. Follow us on social media for the latest news and announcements. We can't wait to welcome you to Teatro!",
 };
 
+export const viewport = {
+  themeColor: '#25211f',
+}
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
