@@ -57,13 +57,25 @@ export default function App() {
     <div className="relative min-h-screen flex flex-col items-center justify-center text-white overflow-hidden font-inter">
       {/* Video Background */}
       <video
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/video/video.mp4" // Placeholder video URL
+        className="absolute inset-0 w-full h-full object-cover z-0 hidden md:block" // Hidden on mobile, shown on medium and larger
+        src="/video/video.mp4" // Your standard (e.g., 16:9) video
         autoPlay
         loop
         muted
-        playsInline // Required for autoplay on some mobile browsers
-        onError={(e) => console.error("Video load error:", e)}
+        playsInline
+        onError={(e) => console.error("Desktop Video load error:", e)}
+      >
+        Your browser does not support the video tag.
+      </video>
+
+      <video
+        className="absolute inset-0 w-full h-full object-cover z-0 block md:hidden" // Shown on mobile, hidden on medium and larger
+        src="/video/video-mobile.mp4" // Your 9:16 mobile video
+        autoPlay
+        loop
+        muted
+        playsInline
+        onError={(e) => console.error("Mobile Video load error:", e)}
       >
         Your browser does not support the video tag.
       </video>
@@ -77,43 +89,45 @@ export default function App() {
         <Image
           src="/logo.png" // Path to your logo in the public directory
           alt="Teatro Logo"
-          width={200} // Adjust as needed
-          height={75} // Adjust as needed
-          className="mb-26 sm:mb-80 drop-shadow-lg"
+          width={300} // Adjust as needed
+          height={150} // Adjust as needed
+          className="mb-80 sm:mb-70 drop-shadow-lg hidden md:block"
         />
+
+        <Image src={"/logo.png"} alt={"Teatro Logo"} width={150} height={75} className={"mb-80 sm:mb-80 drop-shadow-lg block md:hidden"} />
 
         {/* Coming Soon / Opening Message */}
         {isComingSoon ? (
           <>
-            <p className="text-xl sm:text-2xl md:text-3xl font-semibold mb-8 text-gray-200">
+            <p className="text-xl sm:text-2xl md:text-3xl font-semibold mb-8 text-gray-200 md:block hidden">
               GET READY TO EXPERIENCE THE NIGHT!
             </p>
 
             {/* Countdown Timer with Golden Borders */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-12">
-              <div className="p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
-                <span className="block text-5xl sm:text-6xl font-bold text-yellow-300">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-6 sm:mb-12">
+              <div className="p-1 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
+                <span className="block text-3xl sm:text-6xl font-bold text-yellow-300">
                   {days.toString().padStart(2, '0')}
                 </span>
-                <span className="block text-lg sm:text-xl text-gray-300 mt-2">Days</span>
+                <span className="block text-lg sm:text-xl text-gray-300 mt-1 sm:mt-2">Days</span>
               </div>
-              <div className=" bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
-                <span className="block text-5xl sm:text-6xl font-bold text-yellow-300">
+              <div className=" bg-opacity-10 p-1 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
+                <span className="block text-3xl sm:text-6xl font-bold text-yellow-300">
                   {hours.toString().padStart(2, '0')}
                 </span>
-                <span className="block text-lg sm:text-xl text-gray-300 mt-2">Hours</span>
+                <span className="block text-lg sm:text-xl text-gray-300 mt-1 sm:mt-2">Hours</span>
               </div>
-              <div className=" bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
-                <span className="block text-5xl sm:text-6xl font-bold text-yellow-300">
+              <div className=" bg-opacity-10 p-1 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
+                <span className="block text-3xl sm:text-6xl font-bold text-yellow-300">
                   {minutes.toString().padStart(2, '0')}
                 </span>
-                <span className="block text-lg sm:text-xl text-gray-300 mt-2">Minutes</span>
+                <span className="block text-lg sm:text-xl text-gray-300 mt-1 sm:mt-2">Minutes</span>
               </div>
-              <div className=" bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
-                <span className="block text-5xl sm:text-6xl font-bold text-yellow-300">
+              <div className=" bg-opacity-10 p-1 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
+                <span className="block text-3xl sm:text-6xl font-bold text-yellow-300">
                   {seconds.toString().padStart(2, '0')}
                 </span>
-                <span className="block text-lg sm:text-xl text-gray-300 mt-2">Seconds</span>
+                <span className="block text-lg sm:text-xl text-gray-300 mt-1 sm:mt-2">Seconds</span>
               </div>
             </div>
             <p className="text-lg sm:text-xl md:text-2xl font-light text-gray-400">
