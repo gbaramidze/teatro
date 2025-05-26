@@ -27,6 +27,10 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content="Teatro" />
         <link rel="manifest" href="/site.webmanifest" />
+        <meta
+          name="theme-color"
+          content="#25211f"
+        />
       </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
