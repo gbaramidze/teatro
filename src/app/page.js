@@ -15,33 +15,33 @@ export default function App() {
   const [isComingSoon, setIsComingSoon] = useState(true);
 
   // Function to calculate and update the countdown
-  const updateCountdown = () => {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-
-    // Check if the countdown has ended
-    if (distance < 0) {
-      setIsComingSoon(false);
-      clearInterval(window.countdownInterval); // Clear the interval if countdown is over
-      return;
-    }
-
-    // Calculate time components
-    const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Update state
-    setDays(d);
-    setHours(h);
-    setMinutes(m);
-    setSeconds(s);
-    setIsComingSoon(true); // Ensure it's true if distance is still positive
-  };
-
-  // useEffect hook to set up and clear the countdown interval
   useEffect(() => {
+    // Define updateCountdown inside useEffect
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      // Check if the countdown has ended
+      if (distance < 0) {
+        setIsComingSoon(false);
+        clearInterval(window.countdownInterval); // Clear the interval if countdown is over
+        return;
+      }
+
+      // Calculate time components
+      const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Update state
+      setDays(d);
+      setHours(h);
+      setMinutes(m);
+      setSeconds(s);
+      setIsComingSoon(true); // Ensure it's true if distance is still positive
+    };
+
     // Initial call to set countdown immediately
     updateCountdown();
 
@@ -50,7 +50,8 @@ export default function App() {
 
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(window.countdownInterval);
-  }, []); // Empty dependency array means this effect runs once on mount and cleans up on unmount
+  }, [targetDate, setDays, setHours, setMinutes, setSeconds, isComingSoon]); // Now the dependencies are the stable ones
+
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center text-white overflow-hidden font-inter">
@@ -90,25 +91,25 @@ export default function App() {
 
             {/* Countdown Timer with Golden Borders */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-12">
-              <div className="bg-white bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
+              <div className="p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
                 <span className="block text-5xl sm:text-6xl font-bold text-yellow-300">
                   {days.toString().padStart(2, '0')}
                 </span>
                 <span className="block text-lg sm:text-xl text-gray-300 mt-2">Days</span>
               </div>
-              <div className="bg-white bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
+              <div className=" bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
                 <span className="block text-5xl sm:text-6xl font-bold text-yellow-300">
                   {hours.toString().padStart(2, '0')}
                 </span>
                 <span className="block text-lg sm:text-xl text-gray-300 mt-2">Hours</span>
               </div>
-              <div className="bg-white bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
+              <div className=" bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
                 <span className="block text-5xl sm:text-6xl font-bold text-yellow-300">
                   {minutes.toString().padStart(2, '0')}
                 </span>
                 <span className="block text-lg sm:text-xl text-gray-300 mt-2">Minutes</span>
               </div>
-              <div className="bg-white bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
+              <div className=" bg-opacity-10 p-4 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
                 <span className="block text-5xl sm:text-6xl font-bold text-yellow-300">
                   {seconds.toString().padStart(2, '0')}
                 </span>
@@ -126,10 +127,6 @@ export default function App() {
         )}
       </div>
 
-      {/* Tailwind CSS Script - Ensures Tailwind classes are available */}
-      <script src="https://cdn.tailwindcss.com"></script>
-      {/* Google Fonts - Inter */}
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     </div>
   );
 }
