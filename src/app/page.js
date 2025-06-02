@@ -80,7 +80,6 @@ export default function App() {
         Your browser does not support the video tag.
       </video>
 
-      {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-black opacity-70 z-10"></div>
 
       {/* Content Container */}
@@ -89,49 +88,49 @@ export default function App() {
         <Image
           src="/logo.png" // Path to your logo in the public directory
           alt="Teatro Logo"
-          width={300} // Adjust as needed
-          height={150} // Adjust as needed
-          className="mb-80 sm:mb-70 drop-shadow-lg hidden md:block"
+          width={150} // Adjust as needed
+          height={75} // Adjust as needed
+          className="mb-80 sm:mb-100 drop-shadow-lg hidden md:block animate-jump-in"
         />
 
-        <Image src={"/logo.png"} alt={"Teatro Logo"} width={150} height={75} className={"mb-80 sm:mb-80 drop-shadow-lg block md:hidden"} />
+        <Image src={"/logo.png"} alt={"Teatro Logo"} width={150} height={75} className={"mb-80 sm:mb-80 drop-shadow-lg block md:hidden animate-jump-in"} />
 
         {/* Coming Soon / Opening Message */}
         {isComingSoon ? (
           <>
-            <p className="text-xl sm:text-2xl md:text-3xl font-semibold mb-8 text-gray-200 md:block hidden">
+            <p className="text-xl sm:text-2xl md:text-3xl font-semibold mb-8 text-gray-200 md:block hidden animate-pulse animate-infinite animate-delay-200">
               GET READY TO EXPERIENCE THE NIGHT!
             </p>
 
             {/* Countdown Timer with Golden Borders */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-6 sm:mb-12">
-              <div className="p-1 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
-                <span className="block text-3xl sm:text-6xl font-bold text-yellow-300">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-6 sm:mb-12 ">
+              <div className="p-1 sm:p-3 rounded-xl shadow-lg border-4 border-yellow-500 animate-fade-down">
+                <span className="block text-3xl sm:text-4xl font-bold text-yellow-300">
                   {days.toString().padStart(2, '0')}
                 </span>
                 <span className="block text-lg sm:text-xl text-gray-300 mt-1 sm:mt-2">Days</span>
               </div>
-              <div className=" bg-opacity-10 p-1 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
-                <span className="block text-3xl sm:text-6xl font-bold text-yellow-300">
+              <div className=" bg-opacity-10 p-1 sm:p-3 rounded-xl shadow-lg border-4 border-yellow-500 animate-fade-down animate-delay-200">
+                <span className="block text-3xl sm:text-4xl font-bold text-yellow-300">
                   {hours.toString().padStart(2, '0')}
                 </span>
                 <span className="block text-lg sm:text-xl text-gray-300 mt-1 sm:mt-2">Hours</span>
               </div>
-              <div className=" bg-opacity-10 p-1 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
-                <span className="block text-3xl sm:text-6xl font-bold text-yellow-300">
+              <div className=" bg-opacity-10 p-1 sm:p-3 rounded-xl shadow-lg border-4 border-yellow-500 animate-fade-down animate-delay-400">
+                <span className="block text-3xl sm:text-4xl font-bold text-yellow-300">
                   {minutes.toString().padStart(2, '0')}
                 </span>
                 <span className="block text-lg sm:text-xl text-gray-300 mt-1 sm:mt-2">Minutes</span>
               </div>
-              <div className=" bg-opacity-10 p-1 sm:p-6 rounded-xl shadow-lg border-4 border-yellow-500">
-                <span className="block text-3xl sm:text-6xl font-bold text-yellow-300">
+              <div className=" bg-opacity-10 p-1 sm:p-3 rounded-xl shadow-lg border-4 border-yellow-500 animate-fade-down animate-delay-800">
+                <span className="block text-3xl sm:text-4xl font-bold text-yellow-300">
                   {seconds.toString().padStart(2, '0')}
                 </span>
                 <span className="block text-lg sm:text-xl text-gray-300 mt-1 sm:mt-2">Seconds</span>
               </div>
             </div>
-            <p className="text-lg sm:text-xl md:text-2xl font-light text-gray-400">
-              Opening date: June 20, 2025
+            <p className="text-lg sm:text-xl md:text-2xl font-light text-gray-400 box-reflect animate-fade-up animate-delay-1200">
+              Opening date: <p className={"animate-dimlight"}>June 20, 2025</p>
             </p>
           </>
         ) : (

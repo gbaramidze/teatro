@@ -1,8 +1,29 @@
 @import "tailwindcss";
+@import "tailwindcss-animated";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+@layer utilities {
+  .box-reflect {
+    -webkit-box-reflect: below -5px linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2));
+  }
+
+  .animate-dimlight {
+    animation: dimlight 2s ease-in-out infinite;
+    display: inline;
+  }
+
+  @keyframes dimlight {
+    0%, 100% {
+      text-shadow: 0 0 10px #fff, 0 0 20px #af0707;
+    }
+    50% {
+      text-shadow: 0 0 5px #fff, 0 0 10px #ffd700;
+    }
+  }
 }
 
 @theme inline {
