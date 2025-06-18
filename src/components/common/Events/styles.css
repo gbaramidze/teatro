@@ -1,0 +1,145 @@
+
+.event-card {
+    background: #0c0614;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border: 2px solid transparent;
+    box-shadow: 0 0 2px #beb337;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    border: 2px solid var(--bs-primary);
+}
+.event-card img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+}
+.event-card-body {
+    padding: 1.5rem;
+}
+.event-card-buttons {
+    display: flex;
+    gap: 10px;
+    padding: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.event-card-buttons button {
+    background: linear-gradient(135deg, #e1d452, #dabc0b);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+.event-card-buttons button:hover {
+    background: linear-gradient(135deg, rgba(218, 188, 11, 0.77), rgba(225, 212, 82, 0.84));
+    transform: translateY(-3px);
+}
+@media (min-width: 769px) {
+    .event-card-buttons {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .event-card:hover .event-card-buttons {
+        opacity: 1;
+    }
+}
+.ticket-card-modal {
+    background: #18212f3d;
+    border-radius: 15px;
+    padding: 0;
+}
+@media (min-width: 769px) {
+    .ticket-card-modal {
+        padding: 1.5rem;
+    }
+}
+.ticket-counter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.2rem;
+}
+.ticket-counter button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4b5563, #374151);
+    color: #e5e7eb;
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+.ticket-counter button:hover {
+    background: linear-gradient(135deg, #dce301, #fdb41e);
+    transform: scale(1.2);
+    color: #000;
+}
+.ticket-counter span {
+    width: 40px;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+}
+.icon-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #d1d5db;
+}
+.section {
+    background: #0A111F;
+    padding: 12px;
+    font-size: 14px;
+    color: #f0ffcd;
+}
+.total-section {
+    background: rgba(45, 55, 72, 0.29);
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+}
+.book-button {
+    background: linear-gradient(135deg, #c1d02a, #7f8c0f);
+    border: none;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    color: #ffffff;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+.book-button:hover {
+    background: linear-gradient(135deg, #f6f33b, #93a10f);
+    transform: translateY(-3px);
+}
+h3,
+h5 {
+    color: #ffffff;
+}
+.text-muted {
+    color: #9ca3af !important;
+}
+.bi {
+    color: #60a5fa;
+}
+.modal-dark .modal-content {
+    background: #1e293b;
+    color: #e5e7eb;
+}
+.modal-dark .modal-header {
+    border-bottom: 1px solid #4b5563;
+}
+.modal-dark .close {
+    color: #e5e7eb;
+}

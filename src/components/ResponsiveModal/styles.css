@@ -1,0 +1,78 @@
+/* index.css или styles.css */
+.bottom-sheet-modal {
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    width: 100vw;
+    transition: transform 0.3s ease-out;
+}
+
+.bottom-sheet-content {
+    border-radius: 16px 16px 0 0;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.ticket-counter {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 32px;
+}
+
+.ticket-message {
+    font-size: 16px;
+    color: #777;
+}
+
+.ticket-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ticket-counter button:hover {
+    background: linear-gradient(135deg, #3a4350, #1f2834);
+    transform: scale(1.2);
+}
+
+.ticket-counter button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4b5563, #374151);
+    color: #e5e7eb;
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+@media screen and (max-width: 768px) {
+    .ticket-counter {
+        margin-top: 20px;
+    }
+    .ticket-counter button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .ticket-message {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ticket-buttons {
+        width: 100%;
+    }
+
+    .ticket-actions {
+        flex-direction: column;
+        gap: 12px;
+        flex-basis: 100%;
+    }
+
+    .ticket-actions button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+}

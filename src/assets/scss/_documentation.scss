@@ -1,0 +1,69 @@
+.Teatro-documentation {
+    --#{$prefix}body-font-family: var(--family-style-2) !important;
+    --#{$prefix}body-font-size: 16px;
+}
+
+.documentation {
+    --#{$prefix}primary: #B20D5D;
+    --#{$prefix}secondary: #4363EE;
+
+    h4 {
+        text-decoration: underline;
+        margin-bottom: 20px;
+        transition: $transition-base;
+        font-size: 1.5rem;
+
+        &:hover {
+            color: var(--#{$prefix}primary);
+        }
+    }
+
+    h5 {
+        font-size: 1.25rem;
+
+    }
+
+    h6,
+    .h6,
+    h5,
+    .h5,
+    h4,
+    .h4,
+    h3,
+    .h3,
+    h2,
+    .h2,
+    h1,
+    .h1 {
+        font-family: var(--family-style-2);
+    }
+    .support{
+        color: var(--#{$prefix}secondary);
+    }
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.custom-font {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.key-features {
+    li {
+        transition: $transition-base;
+
+        &:hover {
+            color: var(--#{$prefix}primary);
+            padding-left: 5px;
+        }
+    }
+}
+
+.btn-Teatro {
+    font-size: 20px;
+}
+

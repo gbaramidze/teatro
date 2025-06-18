@@ -1,0 +1,46 @@
+{
+  "name": "Teatro-nextjs",
+  "version": "1.2.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@panzoom/panzoom": "^4.6.0",
+    "@popperjs/core": "^2.11.8",
+    "@sasza/react-panzoom": "^1.19.0",
+    "aos": "^2.3.4",
+    "bootstrap": "^5.3.3",
+    "dayjs": "^1.11.13",
+    "framer-motion": "^10.18.0",
+    "leaflet": "^1.9.4",
+    "leaflet-defaulticon-compatibility": "^0.1.2",
+    "leaflet-routing-machine": "^3.2.12",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.0",
+    "next": "^14.2.16",
+    "next-share": "^0.27.0",
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.5",
+    "react-datepicker": "^8.4.0",
+    "react-dom": "^18.3.1",
+    "react-easy-panzoom": "^0.4.4",
+    "react-fast-marquee": "^1.6.2",
+    "react-icons": "^4.12.0",
+    "react-leaflet": "^4.2.1",
+    "react-pan-and-zoom": "^2.1.0",
+    "react-share-social": "^0.1.60",
+    "react-slot-counter": "^2.2.5",
+    "react-zoom-pan-pinch": "^3.7.0",
+    "sharp": "^0.33.2",
+    "stories-react": "^1.1.2",
+    "swiper": "^11.0.5",
+    "swr": "^2.3.3"
+  },
+  "devDependencies": {
+    "sass": "^1.69.6"
+  }
+}

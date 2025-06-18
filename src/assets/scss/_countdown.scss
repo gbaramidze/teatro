@@ -1,0 +1,229 @@
+.countdown-style-3 {
+  @include media-breakpoint-down(lg) {
+    top: -50px;
+  }
+}
+
+.countdown-item {
+  display: flex;
+  align-items: center;
+}
+
+.countdown-number {
+  font-size: 120px;
+  font-weight: 800;
+
+  @include media-breakpoint-down(xxl) {
+    font-size: 90px;
+  }
+
+  @include media-breakpoint-down(lg) {
+    font-size: 80px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    font-size: 60px;
+  }
+}
+
+.countdown-label {
+  --#{$prefix}countdown-text-stroke-color: #f2f2f2;
+  color: var(--#{$prefix}heading-color);
+  font-size: 42px;
+  font-weight: 700;
+  text-transform: capitalize;
+  margin-left: -20px;
+  z-index: 1;
+
+  &.countdown-text-stroke {
+    -webkit-text-stroke: 2px var(--#{$prefix}countdown-text-stroke-color);
+    font-weight: 900;
+  }
+
+  @include media-breakpoint-down(xxl) {
+    font-size: 32px;
+  }
+
+  @include media-breakpoint-down(lg) {
+    font-size: 30px;
+    font-weight: 500;
+
+    &.countdown-text-stroke {
+      font-size: 32px;
+      font-weight: 900;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    font-size: 24px;
+    margin-left: -10px;
+
+    &.countdown-text-stroke {
+      -webkit-text-stroke: 1px var(--#{$prefix}countdown-text-stroke-color);
+      font-size: 25px;
+      font-weight: 900;
+    }
+  }
+}
+
+.event-odometer-heading {
+  color: var(--#{$prefix}heading-color);
+  font-weight: 700;
+}
+
+.event-counter {
+  .index-module_slot__DpPgW {
+    height: 65px !important;
+    margin-left: 0px !important;
+  }
+
+  @media (min-width:900px) {
+    .index-module_slot__DpPgW {
+      height: 87px !important;
+      margin-left: 0px !important;
+    }
+  }
+
+  @media (min-width:1400px) {
+    .index-module_slot__DpPgW {
+      height: 98px !important;
+      margin-left: 0px !important;
+    }
+  }
+
+  &.event-counter-2 {
+    .odometer-digit:last-child {
+      padding: 0 6px 0 0;
+    }
+  }
+
+  .odometer-digit {
+    padding: 0 1px 0 0;
+  }
+
+  @include media-breakpoint-down(xxl) {
+    .odometer.display-2 {
+      font-size: 62px;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .odometer.display-2 {
+      font-size: 56px;
+      line-height: 55px;
+    }
+
+    h3 {
+      font-size: 20px;
+    }
+  }
+}
+
+.event-counter.event-counter-style-2 {
+  .index-module_slot__DpPgW {
+    height: 65px !important;
+    margin-left: -5px !important;
+  }
+
+  @media (min-width:900px) {
+    .index-module_slot__DpPgW {
+      height: 99px !important;
+      margin-left: -5px !important;
+    }
+  }
+
+  @media (min-width:1400px) {
+    .index-module_slot__DpPgW {
+      height: 142px !important;
+      margin-left: -5px !important;
+    }
+  }
+
+  .display-2 {
+    font-size: 110px;
+  }
+
+  h3 {
+    font-size: 36px;
+  }
+
+  @include media-breakpoint-down(xxl) {
+    .display-2 {
+      font-size: 80px;
+    }
+
+    h3 {
+      font-size: 28px;
+    }
+  }
+
+  @include media-breakpoint-down(xxl) {
+    .display-2 {
+      font-size: 75px;
+    }
+
+    h3 {
+      font-size: 25px;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .display-2 {
+      font-size: 60px;
+    }
+
+    h3 {
+      font-size: 20px;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    .display-2 {
+      font-size: 52px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+  }
+}
+
+
+.countdown-gradient {
+
+  #days {
+    -webkit-text-stroke: 2.5px #B8860B; /* DarkGoldenrod */
+    color: transparent;
+
+    &.primary-text-shadow {
+      filter: drop-shadow(10px 9px 46px rgba(184, 134, 11, .6)) drop-shadow(0 11px 15px rgba(184, 134, 11, .20)) drop-shadow(0 24px 38px rgba(184, 134, 11, .20)) drop-shadow(0 -3px 5px rgba(184, 134, 11, .20));
+    }
+  }
+
+  #hours {
+    -webkit-text-stroke: 2.5px #DAA520; /* Goldenrod */
+    color: transparent;
+
+    &.primary-text-shadow {
+      filter: drop-shadow(10px 9px 46px rgba(218, 165, 32, .6)) drop-shadow(0 11px 15px rgba(218, 165, 32, .20)) drop-shadow(0 24px 38px rgba(218, 165, 32, .20)) drop-shadow(0 -3px 5px rgba(218, 165, 32, .20));
+    }
+  }
+
+  #minutes {
+    -webkit-text-stroke: 2.5px #FFD700; /* Gold */
+    color: transparent;
+
+    &.primary-text-shadow {
+      filter: drop-shadow(10px 9px 46px rgba(255, 215, 0, .6)) drop-shadow(0 11px 15px rgba(255, 215, 0, .20)) drop-shadow(0 24px 38px rgba(255, 215, 0, .20)) drop-shadow(0 -3px 5px rgba(255, 215, 0, .20));
+    }
+  }
+
+  #seconds {
+    -webkit-text-stroke: 2.5px #FFBF00; /* Amber/Orange-Gold */
+    color: transparent;
+
+    &.primary-text-shadow {
+      filter: drop-shadow(10px 9px 46px rgba(255, 191, 0, .6)) drop-shadow(0 11px 15px rgba(255, 191, 0, .20)) drop-shadow(0 24px 38px rgba(255, 191, 0, .20)) drop_shadow(0 -3px 5px rgba(255, 191, 0, .20));
+    }
+  }
+}

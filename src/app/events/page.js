@@ -1,0 +1,32 @@
+import React from 'react'
+import ConferenceHall from '@/components/conferenceHall/ConferenceHall'
+import HighlightTwo from '@/components/highlights/HighlightTwo'
+import EventCounterTwo from '@/components/common/eventCounter/EventCounterTwo'
+import TicketTwo from '@/components/tickets/TicketTwo'
+import AboutFour from "@/components/about/AboutFour";
+import SubscriptionOne from "@/components/subscriptions/SubscriptionOne";
+import connectToDatabase from "@/lib/mongodb";
+import Event from "@/models/Event";
+import PageHeader from "@/components/common/PageHeader";
+import HighlightOne from "@/components/highlights/HighlightOne";
+import HighlightThree from "@/components/highlights/HighlightThree";
+
+export const metadata = {
+    title: 'Event calendar - Teatro',
+    description: 'Teatro is a Lounge and Nightclub in Batumi, Georgia. Experience the best of live music, DJ performances, and unforgettable events in a vibrant atmosphere. Join us for an extraordinary nightlife experience!',
+}
+
+const Venue = async () => {
+  await connectToDatabase();
+  const events = await Event.find().lean();
+    return (
+        <>
+            <PageHeader currentPage={"Events"} banner={"banner-1 banner-2"}/>
+            <AboutFour events={events}/>
+            <HighlightThree />
+            <SubscriptionOne styleNum={0} />
+        </>
+    )
+}
+
+export default Venue
