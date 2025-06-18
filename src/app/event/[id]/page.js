@@ -13,6 +13,26 @@ const Share = dynamic(() => import('./Share'), {
   ssr: false,
 });
 
+export async function generateMetadata({ params }) {
+  const { id } = params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) return {};
+
+  await connectToDatabase();
+  const event = await Event.findById(id).lean();
+  if (!event) return {};
+
+  return {
+    title: event.title,
+    description: event.description?.slice(0, 160),
+    openGraph: {
+      title: event.title,
+      description: event.description?.slice(0, 160),
+      images: [event.image],
+    },
+  };
+}
+
 export default async function EventPage({ params }) {
   const { id } = params;
 
