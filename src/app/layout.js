@@ -7,11 +7,15 @@ import { Open_Sans, Poppins, Plus_Jakarta_Sans, Roboto } from "next/font/google"
 import {SWRConfig} from "swr";
 
 export const metadata = {
-  title: 'Teatro next.js template',
-  description: 'Teatro next.js multipage webdite with next.js and bootstrap',
+  title: 'Teatro',
+  description: 'Lounge and Night club in Batumi, Georgia. Experience the best of live music, DJ performances, and unforgettable events in a vibrant atmosphere. Join us for an extraordinary nightlife experience!',
   icons: {
     icon: `${logo.src}`,
   },
+}
+
+export const viewport = {
+  themeColor: '#25211f',
 }
 
 const open_sans = Open_Sans({
