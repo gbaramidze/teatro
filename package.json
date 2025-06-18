@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@flittpayments/js-sdk": "^2.0.5",
     "@panzoom/panzoom": "^4.6.0",
     "@popperjs/core": "^2.11.8",
     "@sasza/react-panzoom": "^1.19.0",

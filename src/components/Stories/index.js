@@ -19,12 +19,22 @@ const Story = () => {
     {
       type: "video",
       url: '/stories/2.mp4',
-      duration: 45000
+      duration: 14000
     },
     {
       type: "video",
       url: '/stories/3.mp4',
       duration: 44000
+    },
+    {
+      type: "video",
+      url: '/stories/4.mp4',
+      duration: 14000
+    },
+    {
+      type: "video",
+      url: '/stories/5.mp4',
+      duration: 45000
     }
   ]);
 
