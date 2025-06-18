@@ -19,7 +19,7 @@ export const menuList = [
     },
     {
         id: "04",
-        name: "CONTACT US",
+        name: "Contact Us",
         path: "/contact-us/",
         isDropdown: false
     },
