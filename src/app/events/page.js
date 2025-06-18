@@ -1,14 +1,9 @@
 import React from 'react'
-import ConferenceHall from '@/components/conferenceHall/ConferenceHall'
-import HighlightTwo from '@/components/highlights/HighlightTwo'
-import EventCounterTwo from '@/components/common/eventCounter/EventCounterTwo'
-import TicketTwo from '@/components/tickets/TicketTwo'
 import AboutFour from "@/components/about/AboutFour";
 import SubscriptionOne from "@/components/subscriptions/SubscriptionOne";
 import connectToDatabase from "@/lib/mongodb";
 import Event from "@/models/Event";
 import PageHeader from "@/components/common/PageHeader";
-import HighlightOne from "@/components/highlights/HighlightOne";
 import HighlightThree from "@/components/highlights/HighlightThree";
 
 export const metadata = {
