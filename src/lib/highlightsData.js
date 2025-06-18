@@ -16,7 +16,7 @@ export const highlightsData = [
     {
         id: 2,
         title: "VIP Experience",
-        desc: "Enjoy exclusive VIP tables with and premium services.",
+        desc: "Enjoy exclusive VIP tables and premium services.",
         icon: <RiVipDiamondLine  size={iconSize} className="text-gold-500" />
     },
     {

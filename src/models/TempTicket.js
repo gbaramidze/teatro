@@ -1,0 +1,29 @@
+import mongoose from 'mongoose';
+
+const TempTicketSchema = new mongoose.Schema({
+  eventId: {
+    type: String,
+    required: true,
+  },
+  tableId: {
+    type: String,
+    required: true,
+  },
+  seat: String,
+  price: Number,
+  guestName: String,
+  guestPhone: String,
+  guestEmail: String,
+  status: {
+    type: String,
+    enum: ['pending', 'paid', 'failed'],
+    default: 'pending',
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    expires: 900, // auto-remove after 15 minutes
+  },
+});
+
+export default mongoose.models.TempTicket || mongoose.model('TempTicket', TempTicketSchema);
