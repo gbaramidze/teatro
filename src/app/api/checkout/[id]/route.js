@@ -29,7 +29,7 @@ async function eventStats(id) {
   };
 }
 
-export async function GET(req, {params}) {
+export async function POST(req, {params}) {
   await connectToDatabase();
   const {id: order_id} = params;
 
