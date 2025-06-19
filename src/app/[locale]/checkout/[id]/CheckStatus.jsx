@@ -45,7 +45,7 @@ const CheckStatus = ({ticketId}) => {
   const { data, isLoading } = useSWR(`/api/checkout/status/${ticketId}`, (url) => fetch(url).then(res => res.json()));
   console.log(params.get('status'))
 
-  const isSuccess = params.get('status') === 'success';
+  const isSuccess = params.get('status') === 'approved' || params.get('status') === 'paid';
   // if(data.data.statusCode === 404) {
   //   redirect('/')
   // }

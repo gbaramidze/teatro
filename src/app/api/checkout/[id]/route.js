@@ -4,6 +4,7 @@ import Ticket from '@/models/Ticket';
 import TempTicket from '@/models/TempTicket';
 import EntryTicket from '@/models/EntryTicket';
 import Payment from '@/models/Payment';
+import {NextResponse} from "next/server";
 
 async function eventStats(id) {
   const event = await Event.findById(id);
@@ -99,7 +100,7 @@ export async function POST(req) {
     await Payment.create({
       eventId,
       total: price,
-      paymentType: 'card',
+      paymentType: 'terminal_tbc',
       price,
       payer: {
         fullName: guestName,
@@ -141,24 +142,9 @@ export async function POST(req) {
     temp.status = 'paid';
     await temp.save();
 
-    const html = `
-    <html>
-      <head>
-        <meta http-equiv="refresh" content="0; url=${redirectUrl}" />
-        <script>window.location.href = "${redirectUrl}"</script>
-      </head>
-      <body>
-        <p>Loading...</p>
-      </body>
-    </html>
-  `;
+    const redirectUrl = `https://teatro.ge/checkout/${order_id}?status=${order_status}`;
 
-    return new Response(html, {
-      status: 200,
-      headers: {
-        'Content-Type': 'text/html',
-      },
-    });
+    return NextResponse.redirect(redirectUrl);
 
   } catch (err) {
     console.error(err);

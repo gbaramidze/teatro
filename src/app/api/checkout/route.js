@@ -33,7 +33,7 @@ export async function POST(req) {
 
 
     const orderId = tempTicket._id.toString();
-    const amount = body.totalPrice;
+    const amount = body.totalPrice * 100;
     // const serverCallbackUrl = `https://teatro.ge/api/checkout/${orderId}`;
     const responseUrl = `https://teatro.ge/api/checkout/${orderId}`;
     const message = `Buying ${body.tickets} ticket(s) on the event ${event.title} at Teatro.ge`
