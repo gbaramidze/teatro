@@ -10,8 +10,8 @@ async function eventStats(id) {
   const event = await Event.findById(id);
 
   const soldResult = await Ticket.aggregate([
-    { $match: { eventId: event._id } },
-    { $group: { _id: null, totalSold: { $sum: "$quantity" } } }
+    {$match: {eventId: event._id}},
+    {$group: {_id: null, totalSold: {$sum: "$quantity"}}}
   ]);
   const sold = soldResult[0]?.totalSold || 0;
 
@@ -19,7 +19,7 @@ async function eventStats(id) {
     acc.seats += (item.seatCount || 0) + (item.standingCount || 0);
     acc.deposit += item.price || 0;
     return acc;
-  }, { seats: 0, deposit: 0 });
+  }, {seats: 0, deposit: 0});
 
   return {
     totalSeats: totalSeats.seats,
@@ -29,8 +29,11 @@ async function eventStats(id) {
   };
 }
 
-export async function POST(req) {
+export async function POST(req, {params}) {
   await connectToDatabase();
+  const {id: order_id} = params;
+
+  console.log('orderId', order_id)
 
   try {
     const bodyText = await req.text();
@@ -39,18 +42,17 @@ export async function POST(req) {
     const {
       order_status,
       response_status,
-      order_id, // сюда ты передаешь tempTicket._id, например "test33694502191"
       amount,
       sender_email,
     } = body;
 
     if (order_status !== 'approved' || response_status !== 'success') {
-      return new Response(JSON.stringify({ error: 'Платёж не прошёл' }), { status: 400 });
+      return new Response(JSON.stringify({error: 'Платёж не прошёл'}), {status: 400});
     }
 
     const temp = await TempTicket.findById(order_id);
     if (!temp || temp.status !== 'pending') {
-      return new Response(JSON.stringify({ error: 'Временный билет не найден или уже оплачен' }), { status: 404 });
+      return new Response(JSON.stringify({error: 'Временный билет не найден или уже оплачен'}), {status: 404});
     }
 
     const {
@@ -65,10 +67,10 @@ export async function POST(req) {
     } = temp;
 
     const event = await Event.findById(eventId);
-    if (!event) return new Response(JSON.stringify({ error: 'Событие не найдено' }), { status: 404 });
+    if (!event) return new Response(JSON.stringify({error: 'Событие не найдено'}), {status: 404});
 
     const seating = event.seatingOverrides.find(s => s.tableId.toString() === tableId);
-    if (!seating) return new Response(JSON.stringify({ error: 'Стол не найден' }), { status: 400 });
+    if (!seating) return new Response(JSON.stringify({error: 'Стол не найден'}), {status: 400});
 
     const finalQuantity = seating.seatCount || tickets || 1;
 
@@ -83,7 +85,7 @@ export async function POST(req) {
       type: 'table',
     });
 
-    const entryTickets = Array.from({ length: finalQuantity }, () => ({
+    const entryTickets = Array.from({length: finalQuantity}, () => ({
       eventId,
       orderId: ticket._id,
       checkedIn: false,
@@ -93,8 +95,8 @@ export async function POST(req) {
     await EntryTicket.insertMany(entryTickets);
 
     await Event.updateOne(
-      { _id: eventId, 'seatingOverrides.tableId': tableId },
-      { $set: { 'seatingOverrides.$.sold': true } }
+      {_id: eventId, 'seatingOverrides.tableId': tableId},
+      {$set: {'seatingOverrides.$.sold': true}}
     );
 
     await Payment.create({
@@ -148,6 +150,6 @@ export async function POST(req) {
 
   } catch (err) {
     console.error(err);
-    return new Response(JSON.stringify({ error: 'Ошибка на сервере' }), { status: 500 });
+    return new Response(JSON.stringify({error: 'Ошибка на сервере'}), {status: 500});
   }
 }

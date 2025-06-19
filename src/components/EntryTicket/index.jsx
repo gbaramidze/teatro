@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
-import { Card, Row, Col, Image } from 'react-bootstrap';
-import { QRCodeSVG } from 'qrcode.react';
+import {Card, Col, Image, Row} from 'react-bootstrap';
 import dayjs from 'dayjs';
 import StyledQRCode from './StyledQR'; // Optional
 
-const EntryTicketCard = ({ ticket, event }) => {
+const EntryTicketCard = ({ticket, event}) => {
   const [isMobile, setIsMobile] = React.useState(false);
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -25,7 +24,7 @@ const EntryTicketCard = ({ ticket, event }) => {
         border: 'none',
       }}
     >
-      <Row className="g-0 flex-column flex-md-row align-items-center" style={{backgroundColor: '#1e1e1e' }}>
+      <Row className="g-0 flex-column flex-md-row align-items-center" style={{backgroundColor: '#1e1e1e'}}>
         {/* Left - QR Section */}
         <Col
           md={4}
@@ -36,17 +35,17 @@ const EntryTicketCard = ({ ticket, event }) => {
             borderRight: !isMobile ? '2px dashed #444' : 'none',
           }}
         >
-          <small style={{ marginBottom: '0.5rem', color: '#bbb' }}>
+          <small style={{marginBottom: '0.5rem', color: '#bbb'}}>
             {ticket.ticketNumber}
           </small>
-          <StyledQRCode value={`${ticket.ticketNumber}`} />
+          <StyledQRCode value={`${ticket.ticketNumber}`}/>
         </Col>
 
         {/* Right - Info Section */}
         <Col
           md={8}
           className="position-relative p-4"
-          style={{ backgroundColor: '#1c1c1c' }}
+          style={{backgroundColor: '#1c1c1c'}}
         >
           {/* Background image */}
           {event.image && (
@@ -79,7 +78,12 @@ const EntryTicketCard = ({ ticket, event }) => {
             }}
           >
             {/* Event Info */}
-            <div style={{display: 'flex', alignItems: !isMobile ? 'flex-start' : 'center', justifyContent: 'left', flexDirection: 'column'}}>
+            <div style={{
+              display: 'flex',
+              alignItems: !isMobile ? 'flex-start' : 'center',
+              justifyContent: 'left',
+              flexDirection: 'column'
+            }}>
               <h5
                 style={{
                   fontWeight: 'bold',
@@ -92,10 +96,10 @@ const EntryTicketCard = ({ ticket, event }) => {
               >
                 {event.title}
               </h5>
-              <small style={{ color: '#ccc', fontSize: '0.85rem' }} className={"mt-1 mb-2"}>
+              <small style={{color: '#ccc', fontSize: '0.85rem'}} className={"mt-1 mb-2"}>
                 {dayjs(event.startDate).format('D MMMM YYYY, 00:00')}
               </small>
-              <div style={{ marginTop: '0.5rem', color: '#ccc', fontSize: '0.9rem', fontWeight: "bold" }}>
+              <div style={{marginTop: '0.5rem', color: '#ccc', fontSize: '0.9rem', fontWeight: "bold"}}>
                 {ticket.type === 'table'
                   ? `Seating: ${ticket.floor} floor — ${ticket.label}`
                   : 'Standing'}
@@ -103,7 +107,8 @@ const EntryTicketCard = ({ ticket, event }) => {
             </div>
 
             {/* User Info */}
-            <div style={{ marginTop: '1rem', fontSize: 16, alignItems: isMobile ? 'center' : 'flex-start' }} className={"d-flex flex-column"}>
+            <div style={{marginTop: '1rem', fontSize: 16, alignItems: isMobile ? 'center' : 'flex-start'}}
+                 className={"d-flex flex-column"}>
               <div>
                 <span style={{fontWeight: 'bold'}}>Name:</span> {ticket.fullName}
               </div>
@@ -117,7 +122,7 @@ const EntryTicketCard = ({ ticket, event }) => {
 
             {/* Footer */}
             <div className="mt-3 d-none d-md-block">
-              <Image src="/logo.png" alt="Logo" style={{ height: 30 }} />
+              <Image src="/logo.png" alt="Logo" style={{height: 30}}/>
             </div>
           </div>
         </Col>

@@ -1,34 +1,34 @@
 'use client';
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
-  Modal,
   Button,
-  Form,
-  Row,
+  ButtonGroup,
+  Card,
   Col,
+  ListGroup,
+  Modal,
+  Row,
   Toast,
   ToastContainer,
-  ButtonGroup,
-  ToggleButton,
-  ListGroup, Card
+  ToggleButton
 } from 'react-bootstrap';
-import {TransformWrapper, TransformComponent, useControls} from "react-zoom-pan-pinch";
+import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-pinch";
 import useSWR from "swr";
 import TicketIcon from "@/components/common/icons/TicketIcon";
 import {useCheckout} from "@/app/[locale]/event/[id]/hooks/useCheckout";
 
 const floors = [
-  { id: 1, name: 'Hall' },
-  { id: 2, name: 'Parterre Royal' }
+  {id: 1, name: 'Hall'},
+  {id: 2, name: 'Parterre Royal'}
 ];
 
 const tables = {
   1: [
-    { id: 101, name: 'Стол 1', x: 100, y: 150, price: 300, description: 'VIP, шампанское' },
-    { id: 102, name: 'Стол 2', x: 300, y: 180, price: 200, description: 'Обычная зона' },
+    {id: 101, name: 'Стол 1', x: 100, y: 150, price: 300, description: 'VIP, шампанское'},
+    {id: 102, name: 'Стол 2', x: 300, y: 180, price: 200, description: 'Обычная зона'},
   ],
   2: [
-    { id: 201, name: 'Стол 1 (2 этаж)', x: 180, y: 100, price: 250, description: 'Балкон' },
+    {id: 201, name: 'Стол 1 (2 этаж)', x: 180, y: 100, price: 250, description: 'Балкон'},
   ]
 };
 
@@ -38,7 +38,7 @@ const svgBackgrounds = {
 };
 
 const Controls = () => {
-  const { zoomIn, zoomOut, resetTransform } = useControls();
+  const {zoomIn, zoomOut, resetTransform} = useControls();
 
   return (
     <div className="tools">
@@ -49,7 +49,7 @@ const Controls = () => {
   );
 };
 
-export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, onHandleSubmit }) {
+export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, onHandleSubmit}) {
   const [selectedFloor, setSelectedFloor] = useState(1);
   const [selectedTable, setSelectedTable] = useState(null);
   const panzoomRef = useRef(null);
@@ -57,7 +57,7 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
   const [agreement, setAgreement] = useState(false);
   const [modal, checkout] = useCheckout(isMobile);
 
-  const { data } = useSWR(`/api/tables/${eventId}`, (url) => fetch(url).then(res => res.json()));
+  const {data} = useSWR(`/api/tables/${eventId}`, (url) => fetch(url).then(res => res.json()));
   const event = data?.data || {};
   const tables = event?.seatingOverrides || []
 
@@ -79,7 +79,7 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
   const totalPrice = selectedTable?.seatCount * event.activePrice + selectedTable?.price;
 
   useEffect(() => {
-    if(show) {
+    if (show) {
       document.documentElement.style.overflow = "hidden"; // <html>
       document.body.style.overflow = "hidden";
     } else {
@@ -92,7 +92,7 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
     };
   }, [show])
 
-  const SeatPreview = ({ table, floor }) => {
+  const SeatPreview = ({table, floor}) => {
     return (
       <div style={{
         width: '100%',
@@ -129,15 +129,19 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
           <Row style={{margin: 0}}>
             {/* Левая часть — схема (показывать только если НЕ мобилка или стол НЕ выбран) */}
             {(!isMobile || !selectedTable) && (
-              <Col md={selectedTable ? 8 : 12} className="border mb-md-3 mb-md-0" style={{ overflow: 'hidden', height: isMobile ? 'calc(100vh - 63px)' : 'calc(100vh - 66px)', position: 'relative' }}>
+              <Col md={selectedTable ? 8 : 12} className="border mb-md-3 mb-md-0" style={{
+                overflow: 'hidden',
+                height: isMobile ? 'calc(100vh - 63px)' : 'calc(100vh - 66px)',
+                position: 'relative'
+              }}>
                 <TransformWrapper
                   initialScale={isMobile ? 0.3 : 0.7}
                   minScale={0.3}
                   maxScale={2}
                   centerOnInit
-                  wheel={{ step: 50 }}
+                  wheel={{step: 50}}
                 >
-                  {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                  {({zoomIn, zoomOut, resetTransform, ...rest}) => (
                     <>
                       {/* Кнопки зума */}
                       <div style={{
@@ -177,7 +181,7 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
                               variant={"outline-primary"}
                               checked={selectedFloor === f.id}
                               onChange={() => setSelectedFloor(f.id)}
-                             id={f.id}>
+                              id={f.id}>
                               {f.name}
                             </ToggleButton>
                           ))}
@@ -185,7 +189,7 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
                       </div>
 
                       {/* Схема зала */}
-                      <TransformComponent wrapperStyle={{ width: '100%', height: '100%' }}>
+                      <TransformComponent wrapperStyle={{width: '100%', height: '100%'}}>
                         <div style={{
                           position: 'relative',
                           width: 1200,
@@ -232,16 +236,17 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
             )}
 
             {/* Правая часть — информация о столе и управление */}
-              {selectedTable && (
-                <Col md={4}>
+            {selectedTable && (
+              <Col md={4}>
 
                 <div className=" rounded">
 
-                  <Card style={{ width: '100%' }}>
+                  <Card style={{width: '100%'}}>
                     <Card.Body>
-                      <SeatPreview table={selectedTable} floor={selectedFloor} />
-                      <Card.Text style={{ fontSize: 15}} className={'mt-2'}>
-                        You can use deposit on this table to buy drinks and food during the event. The deposit is non-refundable.
+                      <SeatPreview table={selectedTable} floor={selectedFloor}/>
+                      <Card.Text style={{fontSize: 15}} className={'mt-2'}>
+                        You can use deposit on this table to buy drinks and food during the event. The deposit is
+                        non-refundable.
                       </Card.Text>
                     </Card.Body>
                     <ListGroup className="list-group-flush">
@@ -266,7 +271,7 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
                       <ListGroup.Item>
                         <div className="ms-2 me-auto">
                           <div className="fw-bold">{selectedTable?.seatCount}</div>
-                          Tickets included:  <TicketIcon />
+                          Tickets included: <TicketIcon/>
                         </div>
 
                       </ListGroup.Item>
@@ -285,7 +290,7 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
                             className="mt-2"
                             onClick={() => setSelectedTable(null)}
                           >
-                           Select another table
+                            Select another table
                           </Button>
                         </Card.Body>
                       )
@@ -294,9 +299,18 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
 
                   {
                     selectedTable && (
-                      <div style={{ display: 'flex', flexDirection: 'column'}}>
-                        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6}} className={"mt-3"}>
-                          By purchasing a table, you agree to our <Button variant="link" onClick={() => setAgreement(true)} style={{ margin: 0, padding: 0}}>terms and conditions</Button>
+                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          flexWrap: 'wrap',
+                          justifyContent: 'center',
+                          gap: 6
+                        }} className={"mt-3"}>
+                          By purchasing a table, you agree to our <Button variant="link"
+                                                                          onClick={() => setAgreement(true)}
+                                                                          style={{margin: 0, padding: 0}}>terms and
+                          conditions</Button>
                         </div>
                         <Button
                           variant="primary"
@@ -311,7 +325,7 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
                     )
                   }
                 </div>
-                </Col>)}
+              </Col>)}
 
           </Row>
         ) : (
@@ -339,10 +353,14 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, 
         <Modal.Body>
           <ul>
             <li>Venue is strictly 21+. Valid government-issued ID can be required for entry.</li>
-            <li>Face control is enforced. Management reserves the right to deny entry to maintain the venue's atmosphere and dress code.</li>
+            <li>Face control is enforced. Management reserves the right to deny entry to maintain the venue's atmosphere
+              and dress code.
+            </li>
             <li>Dress code: Elegant & stylish. We are a luxury lounge and club; please dress accordingly.</li>
             <li>No refunds will be issued for denied entry due to violation of these terms.</li>
-            <li>Respect the venue, staff, and fellow guests. Any inappropriate behavior may result in removal from the premises.</li>
+            <li>Respect the venue, staff, and fellow guests. Any inappropriate behavior may result in removal from the
+              premises.
+            </li>
             <li>Management reserves all rights.</li>
           </ul>
         </Modal.Body>
