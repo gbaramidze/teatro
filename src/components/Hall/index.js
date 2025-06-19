@@ -15,6 +15,7 @@ import {
 import {TransformWrapper, TransformComponent, useControls} from "react-zoom-pan-pinch";
 import useSWR from "swr";
 import TicketIcon from "@/components/common/icons/TicketIcon";
+import {useCheckout} from "@/app/[locale]/event/[id]/hooks/useCheckout";
 
 const floors = [
   { id: 1, name: 'Hall' },
@@ -48,12 +49,13 @@ const Controls = () => {
   );
 };
 
-export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile }) {
+export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile, onHandleSubmit }) {
   const [selectedFloor, setSelectedFloor] = useState(1);
   const [selectedTable, setSelectedTable] = useState(null);
   const panzoomRef = useRef(null);
   const [message, setMessage] = useState(false);
   const [agreement, setAgreement] = useState(false);
+  const [modal, checkout] = useCheckout(isMobile);
 
   const { data } = useSWR(`/api/tables/${eventId}`, (url) => fetch(url).then(res => res.json()));
   const event = data?.data || {};
@@ -299,10 +301,7 @@ export default function HallModalEasyPanzoom({ show, onHide, eventId, isMobile }
                         <Button
                           variant="primary"
                           disabled={!selectedTable}
-                          onClick={() => {
-                            alert(`Вы выбрали ${selectedTable.name}`);
-                            onHide();
-                          }}
+                          onClick={() => onHandleSubmit(selectedTable)}
                           className={"mt-3 mb-4"}
                           style={{width: isMobile ? '100%' : 'auto'}}
                         >

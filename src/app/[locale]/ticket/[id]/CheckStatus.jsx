@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import useSWR from "swr";
 import {redirect} from "@/i18n/routing";
 import {useParams, useSearchParams} from "next/navigation";
+import EntryTicket from "@/components/EntryTicket";
 
 
 const LoadingPayment = () => {
@@ -41,44 +42,14 @@ const SuccessPayment = () => {
 const CheckStatus = ({ticketId}) => {
   const params = useSearchParams()
   const [loading, setLoading] = useState(true);
-  const [result, setResult] = useState(null); // null | 'success' | 'error'
   const { data, isLoading } = useSWR(`/api/checkout/status/${ticketId}`, (url) => fetch(url).then(res => res.json()));
-  console.log(params.get('status'))
 
-  const isSuccess = params.get('status') === 'approved' || params.get('status') === 'paid';
-  // if(data.data.statusCode === 404) {
-  //   redirect('/')
-  // }
-
-  //
-  // useEffect(() => {
-  //   // if (!id || !status) return;
-  //
-  //   // const confirmPayment = async () => {
-  //   //   try {
-  //   //     const res = await fetch(`/api/checkout/callback/${id}?status=${status}`);
-  //   //     if (res.ok) {
-  //   //       setResult('success');
-  //   //     } else {
-  //   //       setResult('error');
-  //   //     }
-  //   //   } catch (err) {
-  //   //     console.error(err);
-  //   //     setResult('error');
-  //   //   } finally {
-  //   //     setLoading(false);
-  //   //   }
-  //   // };
-  //   //
-  //   // confirmPayment();
-  // }, [id, status]);
-
-  console.log(data, isLoading)
+  const isSuccess = data?.tickets.length > 0;
 
   return (
       <>
         {
-          !loading ? (
+          isLoading ? (
             <div className="text-center py-20">
               <h1 className="text-2xl font-semibold" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <LoadingPayment />
@@ -91,6 +62,18 @@ const CheckStatus = ({ticketId}) => {
                   <div className='text-center'><SuccessPayment /></div>
                   <h1 className="text-3xl font-bold text-green-600">Payment successful!</h1>
                   <p className="mt-4 text-lg">A copy of your tickets has been sent to your email. Enjoy the event!</p>
+                  <p>
+                    Bellow you'll find your tickets.
+                  </p>
+                  <p>
+                    {
+                      data.tickets.map((ticketInfo, index) => (
+                        <div key={ticketInfo._id} className={"mt-2 mb-2"}>
+                          <EntryTicket ticket={{...ticketInfo, fullName: data.fullName,  number: `${index + 1}/${data.tickets.length}`, table: data.table}} event={data.event} />
+                        </div>
+                      ))
+                    }
+                  </p>
                 </>
               ) : (
                 <>

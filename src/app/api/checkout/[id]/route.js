@@ -142,9 +142,9 @@ export async function POST(req) {
     temp.status = 'paid';
     await temp.save();
 
-    const redirectUrl = `https://teatro.ge/checkout/${order_id}?status=${order_status}`;
+    const redirectUrl = `https://teatro.ge/ticket/${order_id}`;
 
-    return NextResponse.redirect(redirectUrl);
+    return NextResponse.redirect(redirectUrl, 302);
 
   } catch (err) {
     console.error(err);

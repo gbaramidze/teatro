@@ -28,7 +28,7 @@ const SellTicketActions = ({event}) => {
   const [modal, checkout] = useCheckout(isMobile);
   const t = useTranslations('event');
 
-  const standingTableId = event.seatingOverrides.find((seat) => seat.seatCount)?.tableId || null;
+  const standingTableId = event.seatingOverrides.find((seat) => seat.seatCount > 0)?.tableId || null;
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -44,12 +44,26 @@ const SellTicketActions = ({event}) => {
       eventTitle: title,
       eventDate: date,
       tableId: standingTableId,
-      seat: 'Standing',
+      seat: 'standing',
       totalPrice,
       tickets: count
     }
 
     checkout.open(ticketInfo)
+  }
+
+  const handleSelectTable = (table) => {
+    const ticketInfo = {
+      eventId: event._id,
+      eventTitle: title,
+      eventDate: date,
+      tableId: table._id,
+      seat: 'table',
+      totalPrice: table.price + (activePrice * table.seatCount),
+      tickets: table.seatCount,
+    }
+
+    checkout.open(ticketInfo);
   }
   return (
     <>
@@ -69,7 +83,7 @@ const SellTicketActions = ({event}) => {
         </div>
       )}
 
-      <HallModal show={showHall} onHide={() => setShowHall(false)} isMobile={isMobile} eventId={event._id} />
+      <HallModal show={showHall} onHide={() => setShowHall(false)} isMobile={isMobile} eventId={event._id} onHandleSubmit={handleSelectTable}/>
 
       <ResponsiveModal show={ticketModal} onHide={() => setTicketModal(false)} isMobile={isMobile}>
           <>
