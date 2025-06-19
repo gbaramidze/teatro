@@ -15,7 +15,7 @@ export const metadata = {
 const Venue = async () => {
   const t = await getTranslations('navigation');
   await connectToDatabase();
-  const events = await Event.find().lean();
+  const events = await Event.find({ visible: true }).lean();
     return (
         <>
             <PageHeader currentPage={(t('events'))} banner={"banner-1 banner-2"}/>

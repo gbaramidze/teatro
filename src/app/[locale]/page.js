@@ -15,7 +15,7 @@ import HighlightThree from "@/components/highlights/HighlightThree"; // Adjust t
 
 const Page = async () => {
       await connectToDatabase();
-      const events = await Event.find().lean();
+      const events = await Event.find({ visible: true }).lean();
       return (
         <>
               <NavbarOne />

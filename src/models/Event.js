@@ -24,6 +24,10 @@ const EventSchema = new mongoose.Schema({
       label: String,
     },
   ],
+  visible: {
+    type: Boolean,
+    default: true
+  }
 });
 
 // ✅ экспортируем модель
