@@ -2,6 +2,8 @@ import React from 'react'
 import PageHeader from '@/components/common/PageHeader'
 import Ticket1 from '@/components/tickets/TicketTwo'
 import Direction from '@/components/direction/Direction'
+import Contact from "@/components/contact/Contact";
+import AboutOne from "@/components/about/AboutOne";
 
 export const metadata = {
     title: 'Teatro - Contact-us',
@@ -11,7 +13,7 @@ const ContactUs = () => {
     return (
         <>
             <PageHeader currentPage={"Contact us"} banner={"banner-1 banner-2"} />
-            <Ticket1 />
+            <AboutOne />
             <Direction styleNum={0} />
         </>
     )

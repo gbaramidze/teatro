@@ -32,8 +32,7 @@ export async function POST(req) {
   await connectToDatabase();
 
   try {
-    const bodyText = await req.text();
-    const body = Object.fromEntries(new URLSearchParams(bodyText));
+    const body = await req.json();
 
     const {
       order_status,

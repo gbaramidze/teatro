@@ -26,7 +26,7 @@ const TempTicketSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 900, // auto-remove after 15 minutes
+    expires: 300, // auto-remove after 15 minutes
   },
 });
 

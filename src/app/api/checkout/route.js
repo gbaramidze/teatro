@@ -56,6 +56,7 @@ export async function POST(req) {
         order_desc: message,
         amount,
         response_url: responseUrl,
+        lifetime: 300,
     };
     const { signature } = Signature.sign(data)
 

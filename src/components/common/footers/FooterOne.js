@@ -1,9 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 
 import logo from "@/assets/images/global/logo.png"
 import logo_dark from "@/assets/images/global/logo-dark.png"
+import {FaCcMastercard, FaCcVisa} from "react-icons/fa6";
+import Link from "next/link";
 
 const FooterOne = () => {
 
@@ -22,12 +23,16 @@ const FooterOne = () => {
                         </Link>
                     </div>
                     <div className="col-lg-4 order-2 order-lg-3">
+                        <div className="text-center gap-2 mb-3">
+                            <FaCcMastercard size={64} className={"me-3"}/>
+                            <FaCcVisa  size={64}  />
+                        </div>
                         <ul className="footer-nav list-unstyled d-flex justify-content-center justify-content-lg-end gap-30 mb-0 custom-font-style-1">
                             <li className="nav-item">
-                                <Link href="#" className="nav-link" aria-label="nav-links">Privecy Policy</Link>
+                                <Link href="/privacy" className="nav-link" aria-label="nav-links">Privecy Policy</Link>
                             </li>
                             <li className="nav-item">
-                                <Link href="#" className="nav-link" aria-label="nav-links">Terms & Conditions</Link>
+                                <Link href="/terms" className="nav-link" aria-label="nav-links">Terms & Conditions</Link>
                             </li>
                         </ul>
                     </div>
