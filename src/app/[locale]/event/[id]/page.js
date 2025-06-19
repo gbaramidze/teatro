@@ -106,6 +106,12 @@ export default async function EventPage({ params}) {
             </date>
             <article>{event.description}</article>
             <SellTicketActions event={event}/>
+
+            <div className="mt-4 text-muted text-center text-sm border rounded p-4">
+              In case the event is canceled, all payments will be refunded in full to the original payment method.
+              You will not need to take any additional action — the refund will be processed automatically.
+
+            </div>
             <div style={{ borderBottom: '1px solid #222', margin: '20px 0' }} />
             <Share id={id} title={event.title}/>
           </Col>
