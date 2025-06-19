@@ -29,11 +29,32 @@ async function eventStats(id) {
   };
 }
 
-export async function POST(req, {params}) {
+export async function GET(req, {params}) {
   await connectToDatabase();
   const {id: order_id} = params;
 
-  console.log('orderId', order_id)
+  const temp = await TempTicket.findById(order_id).lean();
+  if (!temp || temp.status !== 'pending') {
+    return new Response(JSON.stringify({error: 'Временный билет не найден или уже оплачен'}), {status: 404});
+  }
+
+  const {
+    eventId,
+    tableId,
+    tickets,
+    seat,
+    price,
+    guestName,
+    guestPhone,
+    guestEmail
+  } = temp;
+
+  const event = await Event.findById(eventId).lean();
+  if (!event) return new Response(JSON.stringify({error: 'Событие не найдено'}), {status: 404});
+
+
+  const seating = event.seatingOverrides.find(s => s._id.toString() === tableId);
+  if (!seating) return new Response(JSON.stringify({error: 'Стол не найден'}), {status: 400});
 
   try {
     const bodyText = await req.text();
@@ -49,28 +70,6 @@ export async function POST(req, {params}) {
     if (order_status !== 'approved' || response_status !== 'success') {
       return new Response(JSON.stringify({error: 'Платёж не прошёл'}), {status: 400});
     }
-
-    const temp = await TempTicket.findById(order_id);
-    if (!temp || temp.status !== 'pending') {
-      return new Response(JSON.stringify({error: 'Временный билет не найден или уже оплачен'}), {status: 404});
-    }
-
-    const {
-      eventId,
-      tableId,
-      tickets,
-      seat,
-      price,
-      guestName,
-      guestPhone,
-      guestEmail
-    } = temp;
-
-    const event = await Event.findById(eventId);
-    if (!event) return new Response(JSON.stringify({error: 'Событие не найдено'}), {status: 404});
-
-    const seating = event.seatingOverrides.find(s => s.tableId.toString() === tableId);
-    if (!seating) return new Response(JSON.stringify({error: 'Стол не найден'}), {status: 400});
 
     const finalQuantity = seating.seatCount || tickets || 1;
 
