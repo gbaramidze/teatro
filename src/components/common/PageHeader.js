@@ -1,7 +1,10 @@
-import Link from 'next/link'
 import React from 'react'
+import {getTranslations} from "next-intl/server";
+import {Link} from "@/i18n/routing";
 
-const PageHeader = ({ currentPage, banner, isBlogDetails }) => {
+const PageHeader = async ({ currentPage, banner, isBlogDetails }) => {
+  const t = await getTranslations('navigation');
+
   return (
     <section className={`banner-section ${banner} position-relative parallax`}>
       <div className="container">
@@ -9,7 +12,7 @@ const PageHeader = ({ currentPage, banner, isBlogDetails }) => {
           <h2 className="banner-heading display-3 fw-extra-bold custom-jakarta mb-0">{currentPage}</h2>
           <nav aria-label="breadcrumb">
             <ol className="blog-breadcrumb breadcrumb">
-              <li className="breadcrumb-item"><Link href="/">Home</Link></li>
+              <li className="breadcrumb-item"><Link href="/">{t('home')}</Link></li>
               {
                 isBlogDetails ? <>
                   <li className={`breadcrumb-item active`} ><Link href="/events" aria-current="page">{isBlogDetails}</Link></li>

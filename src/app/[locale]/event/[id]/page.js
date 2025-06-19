@@ -5,13 +5,15 @@ import PageHeader from "@/components/common/PageHeader";
 import React from "react";
 import {Col, Row, Container, Button} from "react-bootstrap";
 import dayjs from "dayjs";
-import TicketIcon from "@/components/common/icons/TicketIcon";
-import {MdOutlineTableRestaurant} from "react-icons/md";
+import 'dayjs/locale/ru';
+import 'dayjs/locale/ka';
 import dynamic from "next/dynamic";
 import SellTicketActions from "./components/SellTicketActions";
+import {getLocale, getTranslations} from "next-intl/server";
 const Share = dynamic(() => import('./Share'), {
   ssr: false,
 });
+
 
 export async function generateMetadata({ params }) {
   const { id } = params;
@@ -30,11 +32,14 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function EventPage({ params }) {
+export default async function EventPage({ params}) {
   const { id } = params;
-
+  const locale = await getLocale();
+  dayjs.locale(locale)
   await connectToDatabase();
   const event = await Event.findById(id).lean();
+
+  const t = await getTranslations();
 
   if (!event) return notFound();
 
@@ -86,7 +91,7 @@ export default async function EventPage({ params }) {
           __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
         }}
       />
-      <PageHeader currentPage={event.title} isBlogDetails={"Events"} banner={"banner-1 banner-2"} />
+      <PageHeader currentPage={event.title} isBlogDetails={t("navigation.events")} banner={"banner-1 banner-2"} />
       <Container className={"mt-5"}>
         <Row>
           <Col xs={12} md={4}>

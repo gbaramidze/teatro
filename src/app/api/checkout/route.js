@@ -18,11 +18,11 @@ export async function POST(req) {
       eventId: body.eventId,
       tableId: body.tableId,
       seat: body.seat,
-      price: body.price,
-      guestFirstName: body.guestFirstName,
-      guestLastName: body.guestLastName,
-      guestPhone: body.guestPhone,
-      guestEmail: body.guestEmail,
+      tickets: body.tickets,
+      price: body.totalPrice,
+      guestName: body.firstName,
+      guestPhone: body.phone,
+      guestEmail: body.email,
     });
 
     return Response.json({

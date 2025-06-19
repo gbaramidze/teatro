@@ -12,9 +12,10 @@ import dayjs from "dayjs";
 import {BsTicket} from "react-icons/bs";
 import HallModal from "@/components/Hall";
 import "./style.css"
-import {useCheckout} from "@/app/event/[id]/hooks/useCheckout";
+import {useCheckout} from "../hooks/useCheckout";
 import NumberFormat from "@/lib/NumberFormat";
 import {useSearchParams} from "next/navigation";
+import {useTranslations} from "next-intl";
 
 const SellTicketActions = ({event}) => {
   const params = useSearchParams();
@@ -25,6 +26,7 @@ const SellTicketActions = ({event}) => {
   const [isMobile, setIsMobile] = useState(false);
   const [showHall, setShowHall] = useState(false);
   const [modal, checkout] = useCheckout(isMobile);
+  const t = useTranslations('event');
 
   const standingTableId = event.seatingOverrides.find((seat) => seat.seatCount)?.tableId || null;
 
@@ -43,7 +45,8 @@ const SellTicketActions = ({event}) => {
       eventDate: date,
       tableId: standingTableId,
       seat: 'Standing',
-      totalPrice
+      totalPrice,
+      tickets: count
     }
 
     checkout.open(ticketInfo)
@@ -61,7 +64,7 @@ const SellTicketActions = ({event}) => {
       </div> : (
         <div className={'mt-4 text-muted border rounded p-2 pb-0 pt-3'}>
           <p className="text-center">
-            <TicketIcon size={24} className={'mr-2'}/> Ticket sales are not started yet. Please check back later.
+            <TicketIcon size={24} className={'mr-2'}/> {t('tickets_not_available')}
           </p>
         </div>
       )}

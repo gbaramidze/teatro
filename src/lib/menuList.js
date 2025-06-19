@@ -1,26 +1,26 @@
 export const menuList = [
     {
         id: "01",
-        name: "Home",
+        name: "home",
         path: "/"
     },
     {
         id: "02",
-        name: "Events",
-        path: "/events/",
+        name: "events",
+        path: "/events",
         isDropdown: false
     },
     {
         id: "03",
-        name: "Menu",
+        name: "menu",
         path: "https://teatro.eat-me.online",
         external: true,
         isDropdown: false
     },
     {
         id: "04",
-        name: "Contact Us",
-        path: "/contact-us/",
+        name: "contact",
+        path: "/contact-us",
         isDropdown: false
     },
 
