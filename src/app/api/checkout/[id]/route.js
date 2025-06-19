@@ -33,7 +33,7 @@ export async function POST(req, {params}) {
   await connectToDatabase();
   const {id: order_id} = params;
 
-  const temp = await TempTicket.findById(order_id).lean();
+  const temp = await TempTicket.findById(order_id);
   if (!temp || temp.status !== 'pending') {
     return new Response(JSON.stringify({error: 'Временный билет не найден или уже оплачен'}), {status: 404});
   }
@@ -149,6 +149,6 @@ export async function POST(req, {params}) {
 
   } catch (err) {
     console.error(err);
-    return new Response(JSON.stringify({error: 'Ошибка на сервере'}), {status: 500});
+    return new Response(JSON.stringify({error: 'Ошибка на сервере', message: err.message}), {status: 500});
   }
 }
