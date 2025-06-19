@@ -60,9 +60,9 @@ const SellTicketActions = ({event}) => {
       tickets: table.seatCount,
     }
 
-    console.log('ticketInfo', ticketInfo);
+    // console.log('ticketInfo', ticketInfo);
 
-    // checkout.open(ticketInfo);
+    checkout.open(ticketInfo);
   }
   return (
     <>
