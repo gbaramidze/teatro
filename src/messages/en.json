@@ -1,0 +1,15 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact us",
+    "events": "Events",
+    "menu": "Menu"
+  },
+  "events": {
+    "buy_ticket": "Buy Ticket"
+  },
+  "event": {
+    "tickets_not_available": "Ticket sales are not started yet. Please check back later."
+  }
+}

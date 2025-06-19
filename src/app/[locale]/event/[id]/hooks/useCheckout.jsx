@@ -19,8 +19,22 @@ export function useCheckout(isMobile) {
       show={show}
       handleClose={close}
       handleSubmit={(form) => {
-        console.log('Form Submitted:', form);
-        console.log('Ticket Info:', checkoutData);
+
+        fetch('/api/checkout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ...form, ...checkoutData }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('Success:', data);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+        console.log('Form submitted:', {...form, ...checkoutData});
         // отправка данных на сервер, объединяя form + checkoutData
         close();
       }}

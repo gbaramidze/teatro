@@ -4,19 +4,12 @@ import FooterOne from "@/components/common/footers/FooterOne";
 import React from "react";
 import BannerEight from "@/components/heroes/BannerEight";
 import Stories from "@/components/Stories";
-import BlogOne from "@/components/blogs/BlogOne";
 import LineupOne from "@/components/lineups/LineupOne";
-import HighlightTwo from "@/components/highlights/HighlightTwo";
-import FloorPlan from "@/components/common/floorPlan";
-import Award from "@/components/awards/Award";
-import ScrollSection from "@/components/common/ScrollSection";
-import Faq from "@/components/faq/Faq";
-import SponsorSlider from "@/components/sponsores/SponsorSlider";
 import Gallery from "@/components/gallery/Gallery";
 import Cta from "@/components/cta/Cta";
 import SubscriptionOne from "@/components/subscriptions/SubscriptionOne";
 import connectToDatabase from "@/lib/mongodb";
-import Event from "../models/Event";
+import Event from "@/models/Event";
 import BlogSeven from "@/components/blogs/BlogSeven";
 import HighlightThree from "@/components/highlights/HighlightThree"; // Adjust the path as necessary
 

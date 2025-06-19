@@ -5,6 +5,7 @@ import connectToDatabase from "@/lib/mongodb";
 import Event from "@/models/Event";
 import PageHeader from "@/components/common/PageHeader";
 import HighlightThree from "@/components/highlights/HighlightThree";
+import {getTranslations} from "next-intl/server";
 
 export const metadata = {
     title: 'Event calendar - Teatro',
@@ -12,12 +13,13 @@ export const metadata = {
 }
 
 const Venue = async () => {
+  const t = await getTranslations('navigation');
   await connectToDatabase();
   const events = await Event.find().lean();
     return (
         <>
-            <PageHeader currentPage={"Events"} banner={"banner-1 banner-2"}/>
-            <AboutFour events={events}/>
+            <PageHeader currentPage={(t('events'))} banner={"banner-1 banner-2"}/>
+            <AboutFour events={events} />
             <HighlightThree />
             <SubscriptionOne styleNum={0} />
         </>

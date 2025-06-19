@@ -9,9 +9,13 @@ const TempTicketSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  tickets: Number,
   seat: String,
   price: Number,
-  guestName: String,
+  guestName: {
+    type: String,
+    required: true,
+  },
   guestPhone: String,
   guestEmail: String,
   status: {

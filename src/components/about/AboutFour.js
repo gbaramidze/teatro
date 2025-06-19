@@ -5,16 +5,23 @@ import TicketIcon from '@/components/common/icons/TicketIcon'
 import SectionDesc from '@/components/common/sectionTitle/SectionDesc'
 import SectionTitleTwo from '@/components/common/sectionTitle/SectionTitleTwo'
 import dayjs from "dayjs";
+import 'dayjs/locale/ru';
+import 'dayjs/locale/ka';
+import {useLocale, useTranslations} from "next-intl";
 
 const AboutFour = ({ events }) => {
   const [isMobile, setIsMobile] = useState()
-
+  const t = useTranslations('events')
+  const locale = useLocale();
+  // Check if the screen is mobile size
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+   dayjs.locale(locale)
 
 
     return (
@@ -36,7 +43,7 @@ const AboutFour = ({ events }) => {
                             <div className="section-title mb-30 mb-xxl-40">
                                 <SectionTitleTwo
                                   title={event.title}
-                                  subTitle={dayjs(event.date).format('dddd, DD MMMM')}
+                                  subTitle={dayjs(event.date).format('dddd, D MMMM').toUpperCase()}
                                   titleClass={""}
                                   subTitleClass={"text-primary"}
                                 />
@@ -49,7 +56,7 @@ const AboutFour = ({ events }) => {
                             <div className="d-block d-md-flex gap-4 mb-4">
                                 <ButtonFill className={"btn-rounded"} link={`/event/${event._id}`}>
                                     <TicketIcon height={"25"} width={"25"} />
-                                    Buy Ticket
+                                  {t('buy_ticket')}
                                 </ButtonFill>
                             </div>
 

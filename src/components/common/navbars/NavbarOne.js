@@ -1,7 +1,6 @@
 "use client"
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import useStickyHeader from '@/hooks/useStickyHeader'
@@ -12,11 +11,17 @@ import logo from "@/assets/images/global/logo.png"
 import logo_dark from "@/assets/images/global/logo-dark.png"
 import useHoverDropdown from '@/hooks/useHoverDropdown'
 import { menuList } from '@/lib/menuList'
+import {useLocale, useTranslations} from "next-intl";
+import {Link} from "@/i18n/routing";
 
+const locales = [{name: 'English', id: 'en'}, {name: 'Русский', id: 'ru'}, {name: 'ქართული', id: 'ka'}];
 const NavbarOne = () => {
     const pathName = usePathname()
     useStickyHeader(pathName)
     const [isDropdownOpen, setDropdownOpen] = useHoverDropdown()
+    const currentLocale = useLocale()
+
+    const t = useTranslations('navigation');
 
     return (
         <>
@@ -46,28 +51,36 @@ const NavbarOne = () => {
                                                         className={`nav-item ${isDropdown && "dropdown single-pages-dropdown"} `}>
                                                         <Link className={`nav-link ${isDropdown && "dropdown-toggle"} d-flex align-items-end gap-0 flex-column text-uppercase`} href={path} aria-label="nav-links" data-bs-toggle={`${isDropdown && "dropdown"}`} >
                                                             <span className="fw-bold">{id}</span>
-                                                            <span className="fw-semibold">{name}</span>
+                                                            <span className="fw-semibold">{t(name)}</span>
                                                         </Link>
-                                                        {
-                                                            // If dropdown have on menu list than active this code
-                                                            isDropdown &&
-                                                            <ul className={`dropdown-menu ${isDropdownOpen === id ? "show" : ""}`}>
-                                                                {
-                                                                    isDropdown.map(({ id, name, path }) => (
-                                                                        <li key={id}>
-                                                                            <Link className="dropdown-item" href={path} target="_blank" aria-label="single-pages">{name}</Link>
-                                                                        </li>
-                                                                    ))
-                                                                }
-                                                            </ul>
-                                                        }
-
                                                     </li>
                                                 )
                                             })
                                         }
 
                                     </ul>
+
+                                    {/*<div className="dropdown">*/}
+                                    {/*    <button className="btn btn-sm btn-outline-primary d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">*/}
+                                    {/*        <Image src={`/flags/${currentLocale}.svg`} alt={currentLocale} width={20} height={14} />*/}
+                                    {/*        {locales.find((locale) => locale.id === currentLocale)?.name || 'Language'}*/}
+                                    {/*    </button>*/}
+                                    {/*    <ul className="dropdown-menu">*/}
+                                    {/*        {[{name: 'English', id: 'en'}, {name: 'Русский', id: 'ru'}, {name: 'ქართული', id: 'ka'}].map((locale) => (*/}
+                                    {/*          <li key={locale.id}>*/}
+                                    {/*              <Link*/}
+                                    {/*                className="dropdown-item d-flex align-items-center gap-2"*/}
+                                    {/*                href={pathName.replace(`/${currentLocale}`, ``)}*/}
+                                    {/*                locale={locale.id}*/}
+                                    {/*              >*/}
+                                    {/*                  <Image src={`/flags/${locale.id}.svg`} alt={locale.id} width={20} height={14} />*/}
+                                    {/*                  {locale.name}*/}
+                                    {/*              </Link>*/}
+                                    {/*          </li>*/}
+                                    {/*        ))}*/}
+                                    {/*    </ul>*/}
+                                    {/*</div>*/}
+
                                 </div>
                             </div>
                         </div>

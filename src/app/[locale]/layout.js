@@ -5,6 +5,11 @@ import logo from "@/assets/images/global/favicon.ico"
 import LayoutChildren from '@/lib/layoutChildren'
 import { Open_Sans, Poppins, Plus_Jakarta_Sans, Roboto } from "next/font/google"
 import {SWRConfig} from "swr";
+import {NextIntlClientProvider} from "next-intl";
+import { routing } from "@/i18n/routing";
+import { getMessages } from "next-intl/server";
+import {notFound} from "next/navigation";
+import { GoogleTagManager } from '@next/third-parties/google'
 
 export const metadata = {
   title: 'Teatro',
@@ -52,19 +57,28 @@ const roboto = Roboto({
   adjustFontFallback: false
 })
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children, params }) {
+  const { locale } = await params;
+  console.log('recieveing', locale)
+  if (!routing.locales.includes(locale)) {
+    notFound();
+  }
+  const messages = await getMessages();
   return (
     <html lang="en" className={`${open_sans.variable} ${plus_jakarta_sans.variable} ${poppins.variable} ${roboto.variable} `}>
-      <body suppressHydrationWarning={true}>
+    <GoogleTagManager gtmId="G-3Q2DTX49VS" />
+    <body suppressHydrationWarning={true}>
+      <NextIntlClientProvider locale={locale || "en"} messages={messages}>
         <LayoutChildren>
-          <SWRConfig
-            value={{
-              refreshInterval: 5000,
-            }}
-          >
-            {children}
-          </SWRConfig>
-        </LayoutChildren>
+            <SWRConfig
+              value={{
+                refreshInterval: 5000,
+              }}
+            >
+              {children}
+            </SWRConfig>
+          </LayoutChildren>
+      </NextIntlClientProvider>
       </body>
     </html>
   )
