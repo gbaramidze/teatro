@@ -34,8 +34,8 @@ export async function POST(req) {
 
     const orderId = tempTicket._id.toString();
     const amount = body.totalPrice;
-    const serverCallbackUrl = `https://teatro.ge/api/checkout/${orderId}`;
-    const responseUrl = `https://teatro.ge/checkout/${orderId}?status=success`;
+    const serverCallbackUrl = `https://teatro.ge/checkout/${orderId}?status=success`;
+    const responseUrl = `https://teatro.ge/api/checkout/${orderId}`;
     const message = `Buying ${body.tickets} ticket(s) on the event ${event.title} at Teatro.ge`
 
     // const merchantId = process.env.FLITT_MERCHANT_ID;

@@ -140,7 +140,24 @@ export async function POST(req) {
     temp.status = 'paid';
     await temp.save();
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    const html = `
+    <html>
+      <head>
+        <meta http-equiv="refresh" content="0; url=${redirectUrl}" />
+        <script>window.location.href = "${redirectUrl}"</script>
+      </head>
+      <body>
+        <p>Переход...</p>
+      </body>
+    </html>
+  `;
+
+    return new Response(html, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    });
 
   } catch (err) {
     console.error(err);
