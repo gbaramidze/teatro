@@ -113,7 +113,7 @@ const EntryTicketCard = ({ticket, event}) => {
                 <span style={{fontWeight: 'bold'}}>Name:</span> {ticket.fullName}
               </div>
               <div>
-                <span style={{fontWeight: 'bold'}}>Place:</span> {ticket.table.label} - {ticket.table.floor} floor
+                <span style={{fontWeight: 'bold'}}>Place:</span> {ticket.table?.label} - {ticket.table?.floor} floor
               </div>
               <div>
                 <span style={{fontWeight: 'bold'}}>Ticket:</span> {ticket.number}

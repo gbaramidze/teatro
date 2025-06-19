@@ -53,7 +53,7 @@ export async function POST(req, {params}) {
   if (!event) return new Response(JSON.stringify({error: 'Событие не найдено'}), {status: 404});
 
 
-  const seating = event.seatingOverrides.find(s => s._id.toString() === tableId);
+  const seating = event.seatingOverrides.find(s => s.tableId.toString() === tableId);
   if (!seating) return new Response(JSON.stringify({error: 'Стол не найден'}), {status: 400});
 
   try {
@@ -143,7 +143,7 @@ export async function POST(req, {params}) {
     temp.status = 'paid';
     await temp.save();
 
-    const redirectUrl = `https://teatro.ge/ticket/${order_id}`;
+    const redirectUrl = `https://teatro.ge/ticket/${ticket._id}`;
 
     return NextResponse.redirect(redirectUrl, 302);
 
