@@ -34,15 +34,15 @@ export async function POST(req) {
 
     const orderId = tempTicket._id.toString();
     const amount = body.totalPrice;
-    const serverCallbackUrl = `https://teatro.ge/api/checkout/${orderId}`;
-    const responseUrl = `https://teatro.ge/checkout/${orderId}?status=success`;
+    // const serverCallbackUrl = `https://teatro.ge/api/checkout/${orderId}`;
+    const responseUrl = `https://teatro.ge/api/checkout/${orderId}`;
     const message = `Buying ${body.tickets} ticket(s) on the event ${event.title} at Teatro.ge`
 
-    const merchantId = process.env.FLITT_MERCHANT_ID;
-    const secret = process.env.FLITT_SECRET;
+    // const merchantId = process.env.FLITT_MERCHANT_ID;
+    // const secret = process.env.FLITT_SECRET;
 
-    // const merchantId = '1549901';
-    // const secret = 'test'
+    const merchantId = '1549901';
+    const secret = 'test'
 
     Signature.setPassword(secret);
     Signature.setMerchant(merchantId);
@@ -50,7 +50,6 @@ export async function POST(req) {
 
     const data = {
       version: "1.0.1",
-      server_callback_url: serverCallbackUrl,
       order_id: orderId,
       currency: 'GEL',
       merchant_id: Number(merchantId),

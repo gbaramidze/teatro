@@ -32,7 +32,8 @@ export async function POST(req) {
   await connectToDatabase();
 
   try {
-    const body = await req.json();
+    const bodyText = await req.text();
+    const body = Object.fromEntries(new URLSearchParams(bodyText));
 
     const {
       order_status,
@@ -147,7 +148,7 @@ export async function POST(req) {
         <script>window.location.href = "${redirectUrl}"</script>
       </head>
       <body>
-        <p>Переход...</p>
+        <p>Loading...</p>
       </body>
     </html>
   `;
