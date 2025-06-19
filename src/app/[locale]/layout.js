@@ -9,7 +9,7 @@ import {NextIntlClientProvider} from "next-intl";
 import { routing } from "@/i18n/routing";
 import { getMessages } from "next-intl/server";
 import {notFound} from "next/navigation";
-import { GoogleTagManager } from '@next/third-parties/google'
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata = {
   title: 'Teatro',
@@ -59,7 +59,6 @@ const roboto = Roboto({
 
 export default async function RootLayout({ children, params }) {
   const { locale } = await params;
-  console.log('recieveing', locale)
   if (!routing.locales.includes(locale)) {
     notFound();
   }
@@ -67,6 +66,8 @@ export default async function RootLayout({ children, params }) {
   return (
     <html lang="en" className={`${open_sans.variable} ${plus_jakarta_sans.variable} ${poppins.variable} ${roboto.variable} `}>
     <GoogleTagManager gtmId="G-3Q2DTX49VS" />
+    <GoogleAnalytics gaId="G-3Q2DTX49VS" />
+
     <body suppressHydrationWarning={true}>
       <NextIntlClientProvider locale={locale || "en"} messages={messages}>
         <LayoutChildren>

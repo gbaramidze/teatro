@@ -5,24 +5,52 @@ import TempTicket from '@/models/TempTicket';
 import EntryTicket from '@/models/EntryTicket';
 import Payment from '@/models/Payment';
 import bot from '@/lib/telegram';
-import { eventStats } from '@/lib/stats';
 import { checkEventToSwitchPrice } from '@/lib/event';
 
-export async function GET(req, { params }) {
+async function eventStats(id) {
+  const event = await Event.findById(id);
+
+  const soldResult = await Ticket.aggregate([
+    { $match: { eventId: event._id } },
+    { $group: { _id: null, totalSold: { $sum: "$quantity" } } }
+  ]);
+  const sold = soldResult[0]?.totalSold || 0;
+
+  const totalSeats = event.seatingOverrides.reduce((acc, item) => {
+    acc.seats += (item.seatCount || 0) + (item.standingCount || 0);
+    acc.deposit += item.price || 0;
+    return acc;
+  }, { seats: 0, deposit: 0 });
+
+  return {
+    totalSeats: totalSeats.seats,
+    totalDeposit: totalSeats.deposit,
+    sold,
+    percentSold: Math.round((sold * 100) / totalSeats.seats),
+  };
+}
+
+export async function POST(req) {
   await connectToDatabase();
 
   try {
-    const url = new URL(req.url);
-    const status = url.searchParams.get('status');
-    const id = params.id;
+    const body = await req.json();
 
-    if (status !== 'success') {
-      return new Response(JSON.stringify({ error: 'Оплата не прошла' }), { status: 400 });
+    const {
+      order_status,
+      response_status,
+      order_id, // сюда ты передаешь tempTicket._id, например "test33694502191"
+      amount,
+      sender_email,
+    } = body;
+
+    if (order_status !== 'approved' || response_status !== 'success') {
+      return new Response(JSON.stringify({ error: 'Платёж не прошёл' }), { status: 400 });
     }
 
-    const temp = await TempTicket.findById(id);
+    const temp = await TempTicket.findById(order_id);
     if (!temp || temp.status !== 'pending') {
-      return new Response(JSON.stringify({ error: 'Временный билет не найден или уже обработан' }), { status: 404 });
+      return new Response(JSON.stringify({ error: 'Временный билет не найден или уже оплачен' }), { status: 404 });
     }
 
     const {
@@ -47,7 +75,7 @@ export async function GET(req, { params }) {
     const ticket = await Ticket.create({
       eventId,
       fullName: guestName,
-      email: guestEmail,
+      email: guestEmail || sender_email,
       phone: guestPhone,
       comment: '',
       quantity: finalQuantity,
@@ -72,11 +100,11 @@ export async function GET(req, { params }) {
     await Payment.create({
       eventId,
       total: price,
-      paymentType: 'terminal_tbc',
+      paymentType: 'card',
       price,
       payer: {
         fullName: guestName,
-        email: guestEmail,
+        email: guestEmail || sender_email,
         phone: guestPhone,
       },
       details: {
@@ -88,17 +116,17 @@ export async function GET(req, { params }) {
     await checkEventToSwitchPrice(eventId);
     const stats = await eventStats(eventId);
 
-    function escapeMarkdownV2(text) {
+    const escapeMarkdownV2 = (text) => {
       const specialChars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
       const pattern = new RegExp(`([${specialChars.map(c => '\\' + c).join('')}])`, 'g');
       return text.replace(pattern, '\\$1');
-    }
+    };
 
     const message = `
-🎟 *Новая покупка билета*
+🎟 *Новая покупка билета (Webhook)*
 *Клиент:* ${escapeMarkdownV2(guestName)}
 *Телефон:* ${escapeMarkdownV2(guestPhone || '—')}
-*Email:* ${escapeMarkdownV2(guestEmail || '—')}
+*Email:* ${escapeMarkdownV2(guestEmail || sender_email || '—')}
 *Кол-во мест:* ${finalQuantity}
 *Сумма:* ${price} ₾
 *Оплата:* Картой
@@ -107,16 +135,17 @@ export async function GET(req, { params }) {
 *Продано всего:* ${stats.sold}/${stats.totalSeats}
 `;
 
-    // await bot.sendMessage(process.env.CHAT_ID, message, {
-    //   parse_mode: 'Markdown',
-    // });
+    await bot.sendMessage(process.env.CHAT_ID, message, {
+      parse_mode: 'Markdown',
+    });
 
     temp.status = 'paid';
     await temp.save();
 
-    return new Response(JSON.stringify({ success: true, ticketId: ticket._id }), { status: 200 });
-  } catch (error) {
-    console.error(error);
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+
+  } catch (err) {
+    console.error(err);
     return new Response(JSON.stringify({ error: 'Ошибка на сервере' }), { status: 500 });
   }
 }

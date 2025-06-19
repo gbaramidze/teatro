@@ -5,7 +5,7 @@ import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
 import NumberFormat from "@/lib/NumberFormat";
 import {BiCreditCard} from "react-icons/bi";
 
-export default function CheckoutModal({ show, handleClose, handleSubmit, isMobile, label }) {
+export default function CheckoutModal({ show, handleClose, handleSubmit, isMobile, label, loading }) {
   const [formData, setFormData] = useState({
     firstName: '',
     phone: '',
@@ -44,7 +44,6 @@ export default function CheckoutModal({ show, handleClose, handleSubmit, isMobil
   const onSubmit = () => {
     if (validate()) {
       handleSubmit(formData);
-      handleClose();
     }
   };
 
@@ -104,6 +103,7 @@ export default function CheckoutModal({ show, handleClose, handleSubmit, isMobil
           className="btn btn-gradient"
           variant="primary"
           onClick={onSubmit}
+          disabled={loading}
           style={{ width: isMobile ? '100%' : 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 222}}
         >
 

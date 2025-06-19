@@ -4,6 +4,7 @@ import CheckoutModal from '../components/CheckoutForm';
 export function useCheckout(isMobile) {
   const [show, setShow] = useState(false);
   const [checkoutData, setCheckoutData] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const open = useCallback((data = {}) => {
     setCheckoutData(data);
@@ -18,8 +19,9 @@ export function useCheckout(isMobile) {
     <CheckoutModal
       show={show}
       handleClose={close}
+      loading={loading}
       handleSubmit={(form) => {
-
+        setLoading(true)
         fetch('/api/checkout', {
           method: 'POST',
           headers: {
@@ -29,14 +31,16 @@ export function useCheckout(isMobile) {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log('Success:', data);
+            if (data.checkoutUrl) {
+              window.location = data.checkoutUrl
+            }
+            setLoading(false);
+            close();
           })
           .catch((error) => {
-            console.error('Error:', error);
+            alert(`Something went wrong while processing your payment, please try again later.`);
           });
-        console.log('Form submitted:', {...form, ...checkoutData});
         // отправка данных на сервер, объединяя form + checkoutData
-        close();
       }}
       isMobile={isMobile}
       label={checkoutData?.totalPrice || 0}

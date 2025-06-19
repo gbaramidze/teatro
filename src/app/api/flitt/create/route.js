@@ -5,11 +5,9 @@ export async function POST(req) {
   const {
     orderId,
     amount,
-    serverCallbackUrl = `${process.env.BASE_URL}/api/flitt/callback`,
-    responseUrl = `${process.env.BASE_URL}/payment/result`,
+    serverCallbackUrl = `https://teatro.ge/api/checkout/${orderId}`,
+    responseUrl = `https://teatro.ge/checkout/${orderId}`,
   } = await req.json();
-
-  c
 
   const merchantId = process.env.FLITT_MERCHANT_ID;
   const secret = process.env.FLITT_SECRET;
