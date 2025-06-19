@@ -82,12 +82,6 @@ export async function POST(req) {
       await TempTicket.findByIdAndDelete(orderId);
       return NextResponse.json({ error: json }, { status: 500 });
     }
-
-    return Response.json({
-      payload,
-      success: true,
-      tempTicketId: tempTicket._id,
-    });
   } catch (err) {
     console.error('Error saving temp ticket:', err);
     return new Response(JSON.stringify({ success: false, error: 'Internal Server Error' }), {

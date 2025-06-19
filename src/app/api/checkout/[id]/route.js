@@ -4,7 +4,6 @@ import Ticket from '@/models/Ticket';
 import TempTicket from '@/models/TempTicket';
 import EntryTicket from '@/models/EntryTicket';
 import Payment from '@/models/Payment';
-import bot from '@/lib/telegram';
 import { checkEventToSwitchPrice } from '@/lib/event';
 
 async function eventStats(id) {
@@ -135,9 +134,9 @@ export async function POST(req) {
 *Продано всего:* ${stats.sold}/${stats.totalSeats}
 `;
 
-    await bot.sendMessage(process.env.CHAT_ID, message, {
-      parse_mode: 'Markdown',
-    });
+    // await bot.sendMessage(process.env.CHAT_ID, message, {
+    //   parse_mode: 'Markdown',
+    // });
 
     temp.status = 'paid';
     await temp.save();
