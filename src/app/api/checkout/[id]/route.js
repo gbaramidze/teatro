@@ -4,7 +4,6 @@ import Ticket from '@/models/Ticket';
 import TempTicket from '@/models/TempTicket';
 import EntryTicket from '@/models/EntryTicket';
 import Payment from '@/models/Payment';
-import { checkEventToSwitchPrice } from '@/lib/event';
 
 async function eventStats(id) {
   const event = await Event.findById(id);
@@ -112,7 +111,7 @@ export async function POST(req) {
       },
     });
 
-    await checkEventToSwitchPrice(eventId);
+    // await checkEventToSwitchPrice(eventId);
     const stats = await eventStats(eventId);
 
     const escapeMarkdownV2 = (text) => {
