@@ -29,4 +29,4 @@ const EntryTicketSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('EntryTicket', EntryTicketSchema);
+export default mongoose.models.EntryTicket || mongoose.model('EntryTicket', EntryTicketSchema);

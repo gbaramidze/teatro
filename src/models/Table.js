@@ -13,6 +13,6 @@ const tableSchema = new mongoose.Schema({
   standingCount: Number,
   price: Number,
 });
-const Table = mongoose.model("Table", tableSchema);
+const Table = mongoose.models.Table || mongoose.model("Table", tableSchema);
 
-module.exports = Table;
+export default Table;
