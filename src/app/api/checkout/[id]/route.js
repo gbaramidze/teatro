@@ -5,6 +5,33 @@ import TempTicket from '@/models/TempTicket';
 import EntryTicket from '@/models/EntryTicket';
 import Payment from '@/models/Payment';
 import {NextResponse} from "next/server";
+import SendMessage from "@/lib/send-message";
+
+
+async function checkEventToSwitchPrice(id) {
+  const event = await Event.findById(id);
+
+  const soldResult = await Ticket.aggregate([
+    {$match: {eventId: event._id}},
+    {$group: {_id: null, totalSold: {$sum: "$quantity"}}}
+  ]);
+  const sold = soldResult[0]?.totalSold || 0;
+
+  const totalSeats = event.seatingOverrides.reduce((total, acc) => {
+    return total + acc.seatCount + (acc.standingCount || 0);
+  }, 0)
+
+  const percentSold = Math.round(sold * 100 / totalSeats);
+
+  const shouldSwitch = percentSold > 50;
+
+  if (shouldSwitch) {
+    await Event.updateOne(
+      {_id: event._id},
+      {$set: {activePrice: event.bucket2Price}}
+    );
+  }
+}
 
 async function eventStats(id) {
   const event = await Event.findById(id);
@@ -102,7 +129,7 @@ export async function POST(req, {params}) {
       eventId,
       total: price,
       paymentType: 'terminal_tbc',
-      price,
+      price: event.activePrice,
       payer: {
         fullName: guestName,
         email: guestEmail || sender_email,
@@ -116,6 +143,8 @@ export async function POST(req, {params}) {
 
     // await checkEventToSwitchPrice(eventId);
     const stats = await eventStats(eventId);
+
+    await checkEventToSwitchPrice(eventId)
 
     const escapeMarkdownV2 = (text) => {
       const specialChars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'];
@@ -136,9 +165,7 @@ export async function POST(req, {params}) {
 *Продано всего:* ${stats.sold}/${stats.totalSeats}
 `;
 
-    // await bot.sendMessage(process.env.CHAT_ID, message, {
-    //   parse_mode: 'Markdown',
-    // });
+    await SendMessage(message, -4838615349);
 
     temp.status = 'paid';
     await temp.save();

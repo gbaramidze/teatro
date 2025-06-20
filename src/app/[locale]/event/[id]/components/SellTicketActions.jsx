@@ -25,7 +25,7 @@ const SellTicketActions = ({event}) => {
   const [modal, checkout] = useCheckout(isMobile);
   const t = useTranslations('event');
 
-  const standingTableId = event.seatingOverrides.find((seat) => seat.seatCount > 0)?.tableId || null;
+  const standingTableId = event.seatingOverrides.find((seat) => seat.seatCount === 0 && seat.standingCount > 0)?.tableId || null;
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -46,7 +46,9 @@ const SellTicketActions = ({event}) => {
       tickets: count
     }
 
-    checkout.open(ticketInfo)
+    console.log('Ticket Info:', ticketInfo);
+
+    // checkout.open(ticketInfo)
   }
 
   const handleSelectTable = (table) => {
@@ -59,8 +61,6 @@ const SellTicketActions = ({event}) => {
       totalPrice: table.price + (activePrice * table.seatCount),
       tickets: table.seatCount,
     }
-
-    // console.log('ticketInfo', ticketInfo);
 
     checkout.open(ticketInfo);
   }
