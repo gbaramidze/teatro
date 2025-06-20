@@ -6,6 +6,7 @@ import EntryTicket from '@/models/EntryTicket';
 import Payment from '@/models/Payment';
 import {NextResponse} from "next/server";
 import SendMessage from "@/lib/send-message";
+import SendTicket from "@/lib/sendEmail";
 
 
 async function checkEventToSwitchPrice(id) {
@@ -171,6 +172,8 @@ export async function POST(req, {params}) {
     await temp.save();
 
     const redirectUrl = `https://teatro.ge/ticket/${ticket._id}`;
+
+    await SendTicket(ticket._id);
 
     return NextResponse.redirect(redirectUrl, 302);
 
