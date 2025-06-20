@@ -46,9 +46,9 @@ const SellTicketActions = ({event}) => {
       tickets: count
     }
 
-    console.log('Ticket Info:', ticketInfo);
+    // console.log('Ticket Info:', ticketInfo);
 
-    // checkout.open(ticketInfo)
+    checkout.open(ticketInfo)
   }
 
   const handleSelectTable = (table) => {
