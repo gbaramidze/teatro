@@ -16,7 +16,7 @@ import {useTranslations} from "next-intl";
 
 const SellTicketActions = ({event}) => {
   const params = useSearchParams();
-  const ticketsEnabled = params.get('enabled') === 'true';
+  const ticketsEnabled = true;
   const {title, date, image, activePrice} = event;
   const [ticketModal, setTicketModal] = React.useState(false);
   const [count, setCount] = useState(1);
