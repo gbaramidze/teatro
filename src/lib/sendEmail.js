@@ -14,12 +14,12 @@ const SendTicket = async (ticketId) => {
     await connectToDatabase()
 
     const tempTicket = await Ticket.findById(ticketId).lean();
-    if (!tempTicket) return res.status(404).json({error: 'Ticket not found'});
+    if (!tempTicket) return {error: 'Ticket not found'};
 
     const entryTickets = await EntryTicket.find({orderId: tempTicket._id}).lean();
     const event = await Event.findById(tempTicket.eventId).lean();
 
-    if (!event) return res.status(404).json({error: 'Event not found'});
+    if (!event) return {error: 'Event not found'};
 
     const table = event.seatingOverrides?.find(
       (seat) => seat.tableId?.toString() === tempTicket.tableId?.toString()
