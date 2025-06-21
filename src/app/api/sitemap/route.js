@@ -10,23 +10,29 @@ export async function GET() {
 
   // Статичные и динамичные маршруты
   const routes = [
-    ...menuList.map((item) => item.path),
-    ...dynamicSlugs.map((slug) => `/events/${slug}`),
+    ...menuList.filter(r => !r.external).map((item) => item.path),
+    ...dynamicSlugs.map((slug) => `/event/${slug}`),
   ];
 
   // Генерация XML
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    ${routes
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  ${routes
     .map(
       (route) => `
-      <url>
-        <loc>${baseUrl}${route}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-      </url>`
+    <url>
+      <loc>${baseUrl}${route}</loc>
+      <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}/ru${route}" />
+      <xhtml:link rel="alternate" hreflang="ka" href="${baseUrl}/ka${route}" />
+      <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}${route}" />
+      <lastmod>${new Date().toISOString()}</lastmod>
+    </url>`
     )
     .join('')}
-  </urlset>`;
+</urlset>`;
+
 
   // Возвращаем XML-ответ
   return new Response(xml, {

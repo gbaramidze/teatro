@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 
 import {usePathname} from 'next/navigation'
 import {menuList} from '@/lib/menuList'
 import {useLocale, useTranslations} from "next-intl";
+import {Link} from "@/i18n/routing";
 
 const locales = [{name: 'English', id: 'en'}, {name: 'Русский', id: 'ru'}, {name: 'ქართული', id: 'ka'}];
 
@@ -47,7 +47,7 @@ const NavbarOffcanvas = ({img}) => {
 
         </ul>
       </div>
-      <div>
+      <div className={"d-flex justify-content-center"}>
         <div className="dropdown mb-3 m-3">
           <button className="btn btn-sm btn-outline-primary d-flex align-items-center gap-2 dropdown-toggle"
                   type="button" data-bs-toggle="dropdown" aria-expanded="true">
