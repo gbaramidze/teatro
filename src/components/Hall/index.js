@@ -1,4 +1,3 @@
-'use client';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Button,
@@ -16,21 +15,12 @@ import {TransformComponent, TransformWrapper, useControls} from "react-zoom-pan-
 import useSWR from "swr";
 import TicketIcon from "@/components/common/icons/TicketIcon";
 import {useCheckout} from "@/app/[locale]/event/[id]/hooks/useCheckout";
+import {useTranslations} from 'next-intl';
 
 const floors = [
   {id: 1, name: 'Hall'},
   {id: 2, name: 'Parterre Royal'}
 ];
-
-const tables = {
-  1: [
-    {id: 101, name: 'Стол 1', x: 100, y: 150, price: 300, description: 'VIP, шампанское'},
-    {id: 102, name: 'Стол 2', x: 300, y: 180, price: 200, description: 'Обычная зона'},
-  ],
-  2: [
-    {id: 201, name: 'Стол 1 (2 этаж)', x: 180, y: 100, price: 250, description: 'Балкон'},
-  ]
-};
 
 const svgBackgrounds = {
   1: '/plan/floor1.png',
@@ -50,6 +40,7 @@ const Controls = () => {
 };
 
 export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, onHandleSubmit}) {
+  const t = useTranslations('hall');
   const [selectedFloor, setSelectedFloor] = useState(1);
   const [selectedTable, setSelectedTable] = useState(null);
   const panzoomRef = useRef(null);
@@ -80,7 +71,7 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
 
   useEffect(() => {
     if (show) {
-      document.documentElement.style.overflow = "hidden"; // <html>
+      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
     } else {
       document.documentElement.style.overflow = "";
@@ -106,7 +97,7 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
             height: table.height,
             border: '2px solid #ccc',
             backgroundImage: `url(${svgBackgrounds[floor]})`,
-            backgroundSize: '1200px 1500px', // размеры всей схемы
+            backgroundSize: '1200px 1500px',
             backgroundRepeat: 'no-repeat',
             overflow: 'hidden',
             backgroundPosition: `-${table.x}px -${table.y}px`,
@@ -122,12 +113,11 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
   return (
     <Modal show={show} onHide={onHide} size="xl" centered fullscreen>
       <Modal.Header closeButton>
-        <Modal.Title>Table booking</Modal.Title>
+        <Modal.Title>{t('table_booking')}</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{padding: 0, overflow: !isMobile ? 'hidden' : 'auto'}}>
         {tables ? (
           <Row style={{margin: 0}}>
-            {/* Левая часть — схема (показывать только если НЕ мобилка или стол НЕ выбран) */}
             {(!isMobile || !selectedTable) && (
               <Col md={selectedTable ? 8 : 12} className="border mb-md-3 mb-md-0" style={{
                 overflow: 'hidden',
@@ -143,7 +133,6 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
                 >
                   {({zoomIn, zoomOut, resetTransform, ...rest}) => (
                     <>
-                      {/* Кнопки зума */}
                       <div style={{
                         position: 'absolute',
                         bottom: 10,
@@ -160,7 +149,6 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
                         <Button variant="light" size="sm" onClick={() => zoomOut()}>–</Button>
                       </div>
 
-                      {/* Выбор этажа */}
                       <div style={{
                         position: 'absolute',
                         top: 10,
@@ -180,7 +168,11 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
                               value={f.id}
                               variant={"outline-primary"}
                               checked={selectedFloor === f.id}
-                              onChange={() => setSelectedFloor(f.id)}
+                              onChange={() => {
+                                setSelectedFloor(f.id);
+                                setSelectedTable(null);
+                                setMessage(false);
+                              }}
                               id={f.id}>
                               {f.name}
                             </ToggleButton>
@@ -188,7 +180,6 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
                         </ButtonGroup>
                       </div>
 
-                      {/* Схема зала */}
                       <TransformComponent wrapperStyle={{width: '100%', height: '100%'}}>
                         <div style={{
                           position: 'relative',
@@ -232,53 +223,47 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
                   )}
                 </TransformWrapper>
               </Col>
-
             )}
 
-            {/* Правая часть — информация о столе и управление */}
             {selectedTable && (
               <Col md={4}>
-
-                <div className=" rounded">
-
+                <div className="rounded">
                   <Card style={{width: '100%'}}>
                     <Card.Body>
                       <SeatPreview table={selectedTable} floor={selectedFloor}/>
                       <Card.Text style={{fontSize: 15}} className={'mt-2'}>
-                        You can use deposit on this table to buy drinks and food during the event. The deposit is
-                        non-refundable.
+                        {t('table_deposit_description')}
                       </Card.Text>
                     </Card.Body>
                     <ListGroup className="list-group-flush">
                       <ListGroup.Item className="d-flex justify-content-between align-items-start">
                         <div className="ms-2 me-auto">
                           <div className="fw-bold">{selectedTable?.label}</div>
-                          Seat
+                          {t('seat')}
                         </div>
                       </ListGroup.Item>
                       <ListGroup.Item>
                         <div className="ms-2 me-auto">
                           <div className="fw-bold">{selectedTable?.floor}</div>
-                          Floor
+                          {t('floor')}
                         </div>
                       </ListGroup.Item>
                       <ListGroup.Item>
                         <div className="ms-2 me-auto">
                           <div className="fw-bold">{selectedTable?.price} ₾</div>
-                          Deposit
+                          {t('deposit')}
                         </div>
                       </ListGroup.Item>
                       <ListGroup.Item>
                         <div className="ms-2 me-auto">
                           <div className="fw-bold">{selectedTable?.seatCount}</div>
-                          Tickets included: <TicketIcon/>
+                          {t('tickets_included')} <TicketIcon/>
                         </div>
-
                       </ListGroup.Item>
                       <ListGroup.Item>
                         <div className="ms-2 me-auto">
                           <div className="fw-bold">{totalPrice} ₾</div>
-                          Total price
+                          {t('total_price')}
                         </div>
                       </ListGroup.Item>
                     </ListGroup>
@@ -290,7 +275,7 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
                             className="mt-2"
                             onClick={() => setSelectedTable(null)}
                           >
-                            Select another table
+                            {t('select_another_table')}
                           </Button>
                         </Card.Body>
                       )
@@ -307,19 +292,16 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
                           justifyContent: 'center',
                           gap: 6
                         }} className={"mt-3"}>
-                          By purchasing a table, you agree to our <Button variant="link"
-                                                                          onClick={() => setAgreement(true)}
-                                                                          style={{margin: 0, padding: 0}}>terms and
-                          conditions</Button>
+                          {t('terms_info')} <Button variant="link" onClick={() => setAgreement(true)}
+                                                    style={{margin: 0, padding: 0}}>{t('terms_and_conditions')}</Button>
                         </div>
                         <Button
                           variant="primary"
                           disabled={!selectedTable}
                           onClick={() => onHandleSubmit(selectedTable)}
                           className={"mt-3 mb-4"}
-                          style={{width: isMobile ? '100%' : 'auto'}}
-                        >
-                          {selectedTable && (`${totalPrice} ₾`)} Buy now
+                          style={{width: isMobile ? '100%' : 'auto'}}>
+                          {selectedTable && (`${totalPrice} ₾`)} {t('buy_now')}
                         </Button>
                       </div>
                     )
@@ -330,7 +312,7 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
           </Row>
         ) : (
           <div className="text-center">
-            <p>Loading...</p>
+            <p>{t('loading')}</p>
           </div>
         )}
       </Modal.Body>
@@ -338,30 +320,26 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
       <ToastContainer position={'top-center'} style={{zIndex: 9999}}>
         <Toast onClose={() => setMessage(false)} show={message} delay={3000} autohide>
           <Toast.Header>
-            Sorry!
+            {t('sorry')}
           </Toast.Header>
-          <Toast.Body>Selected table is not available</Toast.Body>
+          <Toast.Body>{t('table_not_available')}</Toast.Body>
         </Toast>
       </ToastContainer>
 
       <Modal show={agreement} onHide={() => setAgreement(false)} dialogClassName={"modal-dialog-centered"}>
         <Modal.Header closeButton>
           <Modal.Title>
-            Terms and Conditions
+            {t('terms_and_conditions')}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ul>
-            <li>Venue is strictly 21+. Valid government-issued ID can be required for entry.</li>
-            <li>Face control is enforced. Management reserves the right to deny entry to maintain the venue's atmosphere
-              and dress code.
-            </li>
-            <li>Dress code: Elegant & stylish. We are a luxury lounge and club; please dress accordingly.</li>
-            <li>No refunds will be issued for denied entry due to violation of these terms.</li>
-            <li>Respect the venue, staff, and fellow guests. Any inappropriate behavior may result in removal from the
-              premises.
-            </li>
-            <li>Management reserves all rights.</li>
+            <li>{t('term_1')}</li>
+            <li>{t('term_2')}</li>
+            <li>{t('term_3')}</li>
+            <li>{t('term_4')}</li>
+            <li>{t('term_5')}</li>
+            <li>{t('term_6')}</li>
           </ul>
         </Modal.Body>
       </Modal>

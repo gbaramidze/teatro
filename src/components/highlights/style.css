@@ -1,0 +1,21 @@
+.background-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle at 30% 30%, #3b1031, transparent 60%),
+    radial-gradient(circle at 70% 60%, #212c2c, transparent 60%);
+    filter: blur(120px);
+    animation: moveGlow 20s infinite alternate;
+    z-index: 0;
+}
+
+@keyframes moveGlow {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-5%, -5%);
+    }
+}

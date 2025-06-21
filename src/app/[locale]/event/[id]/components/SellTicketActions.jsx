@@ -69,10 +69,12 @@ const SellTicketActions = ({event}) => {
       {modal}
       {ticketsEnabled ? <div className="mt-4 eventButtons">
         <Button variant="outline-primary" onClick={() => setTicketModal(true)}>
-          <TicketIcon/> Buy Ticket
+          <TicketIcon/> {t("Buy Ticket")}
         </Button>
+
         <Button variant="outline-primary" onClick={() => setShowHall(true)}>
-          <MdOutlineTableRestaurant size={24} className={'pr-2'}/> <span className={"ml-2"}>Book a table</span>
+          <MdOutlineTableRestaurant size={24} className={'pr-2 mr-2'}/>
+          <span className={"ml-2"}>{t("Book a table")}</span>
         </Button>
       </div> : (
         <div className={'mt-4 text-muted border rounded p-2 pb-0 pt-3'}>
@@ -112,18 +114,26 @@ const SellTicketActions = ({event}) => {
                           background: '#444',
                           marginRight: 12,
                           borderRadius: '50%',
-                          height: 60,
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          flexBasis: 60
+                          flexBasis: '60px',
                         }}>
-                          <BsTicket size={25}/>
+                          <div style={{
+                            width: 60,
+                            height: 60,
+                            justifyContent: 'center',
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}>
+                            <BsTicket size={25}/>
+                          </div>
                         </div>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                           <div>
-                            Standard ticket {activePrice === event.bucket1Price &&
-                            <Badge bg="success">Early bird</Badge>}
+                            {t("Standard ticket")}{" "}
+                            {activePrice === event.bucket1Price &&
+                              <Badge bg="success">{t("Early bird")}</Badge>}
                           </div>
                           <div>
                             {activePrice} ₾
@@ -160,7 +170,7 @@ const SellTicketActions = ({event}) => {
                           gap: 16
                         }}
                       >
-                        {NumberFormat(totalPrice)} ₾ Next
+                        {NumberFormat(totalPrice)} ₾ {t('Next')}
                       </Button>
                     </div>
                   </div>

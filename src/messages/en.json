@@ -6,10 +6,143 @@
     "events": "Events",
     "menu": "Menu"
   },
+  "checkout": {
+    "Checkout": "Checkout",
+    "Full Name": "Full Name",
+    "Phone": "Phone (+995)",
+    "Email": "Email",
+    "Invalid Email": "Invalid email address",
+    "Name Required": "Full name is required",
+    "Agreement Message": "By purchasing a ticket, you agree to our",
+    "Terms Button": "terms and conditions",
+    "Pay Now": "Pay now",
+    "Terms Title": "Terms and Conditions",
+    "Term1": "Venue is strictly 21+. Valid government-issued ID can be required for entry.",
+    "Term2": "Face control is enforced. Management reserves the right to deny entry to maintain the venue's atmosphere and dress code.",
+    "Term3": "Dress code: Elegant & stylish. We are a luxury lounge and club; please dress accordingly.",
+    "Term4": "No refunds will be issued for denied entry due to violation of these terms.",
+    "Term5": "Respect the venue, staff, and fellow guests. Any inappropriate behavior may result in removal from the premises.",
+    "Term6": "Management reserves all rights."
+  },
+  "blog": {
+    "section_name": "The Power Behind Us",
+    "title": "Teatro",
+    "subtitle": "Headlines",
+    "description": "Elevating the Music. Our valued partners and sponsors play a pivotal role in bringing our vision to life. We orchestrate an unforgettable music celebration that resonates."
+  },
+  "cta": "GET YOUR TICKET NOW",
+  "lineup": {
+    "line_up": "Line-Up",
+    "local": "Local",
+    "artists": "Artists",
+    "description": "Unleash the rhythm with an extraordinary lineup. Get ready for a musical extravaganza that will captivate your senses.",
+    "see_more": "See More"
+  },
+  "hall": {
+    "table_booking": "Table booking",
+    "table_deposit_description": "You can use deposit on this table to buy drinks and food during the event. The deposit is non-refundable.",
+    "seat": "Seat",
+    "floor": "Floor",
+    "deposit": "Deposit",
+    "tickets_included": "Tickets included:",
+    "total_price": "Total price",
+    "select_another_table": "Select another table",
+    "terms_info": "By purchasing a table, you agree to our",
+    "terms_and_conditions": "terms and conditions",
+    "buy_now": "Buy now",
+    "loading": "Loading...",
+    "sorry": "Sorry!",
+    "table_not_available": "Selected table is not available",
+    "term_1": "Venue is strictly 21+. Valid government-issued ID can be required for entry.",
+    "term_2": "Face control is enforced. Management reserves the right to deny entry to maintain the venue's atmosphere and dress code.",
+    "term_3": "Dress code: Elegant & stylish. We are a luxury lounge and club; please dress accordingly.",
+    "term_4": "No refunds will be issued for denied entry due to violation of these terms.",
+    "term_5": "Respect the venue, staff, and fellow guests. Any inappropriate behavior may result in removal from the premises.",
+    "term_6": "Management reserves all rights."
+  },
   "events": {
-    "buy_ticket": "Buy Ticket"
+    "buy_ticket": "Buy Ticket",
+    "meta": {
+      "title": "Event calendar - Teatro",
+      "description": "Teatro is a Lounge and Nightclub in Batumi, Georgia. Experience the best of live music, DJ performances, and unforgettable events in a vibrant atmosphere. Join us for an extraordinary nightlife experience!",
+      "keywords": "Teatro, Batumi, Lounge, Nightclub, Live Music, DJ Performances, Events, Nightlife",
+      "openGraph": {
+        "title": "Event calendar - Teatro",
+        "description": "Teatro is a Lounge and Nightclub in Batumi, Georgia. Experience the best of live music, DJ performances, and unforgettable events in a vibrant atmosphere. Join us for an extraordinary nightlife experience!",
+        "url": "https://teatro.ge/events",
+        "siteName": "Teatro",
+        "images": [
+          {
+            "url": "https://teatro.ge/banner.jpg",
+            "width": 1800,
+            "height": 1201,
+            "alt": "Teatro Banner"
+          }
+        ],
+        "locale": "en_US",
+        "type": "website"
+      }
+    }
   },
   "event": {
-    "tickets_not_available": "Ticket sales are not started yet. Please check back later."
+    "Buy Ticket": "Buy Ticket",
+    "Book a table": "Book a table",
+    "Standard ticket": "Standard ticket",
+    "Early bird": "Early bird",
+    "Next": "Next",
+    "tickets_not_available": "Tickets are not available"
+  },
+  "HighlightThree": {
+    "Highlights": "Highlights",
+    "What": "What",
+    "You will enjoy": "You will enjoy",
+    "See More": "See More",
+    "Vibrant Music": "Vibrant Music",
+    "Vibrant Music Desc": "Dance to live DJs and bands playing EDM, hip-hop, and hits.",
+    "VIP Experience": "VIP Experience",
+    "VIP Experience Desc": "Enjoy exclusive VIP tables and premium services.",
+    "Light Shows": "Light Shows",
+    "Light Shows Desc": "Experience mesmerizing laser and light displays synced with music.",
+    "Craft Cocktails": "Craft Cocktails",
+    "Craft Cocktails Desc": "Savor crafted cocktails and premium spirits at stylish bars.",
+    "Themed Nights": "Themed Nights",
+    "Themed Nights Desc": "Join unique themed events, from burlesque to masquerade parties.",
+    "Dance Floor": "Dance Floor",
+    "Dance Floor Desc": "Move freely on our expansive dance floor for self-expression.",
+    "Live Acts": "Live Acts",
+    "Live Acts Desc": "Enjoy captivating performances, from dancers to live acts.",
+    "Guest DJs": "Guest DJs",
+    "Guest DJs Desc": "Experience special nights with world-renowned guest DJs, events."
+  },
+  "AboutOne": {
+    "Tech support": "Tech support",
+    "Manager's email": "Manager's email",
+    "Phone": "Phone",
+    "Chat with us": "Chat with us"
+  },
+  "contactPage": {
+    "title": "Contact Us",
+    "description": "We'd love to hear from you! Whether you have questions, feedback, or just want to say hello, feel free to reach out.",
+    "keywords": "Contact, Teatro, Batumi, Lounge, Nightclub, Live Music, DJ Performances, Events",
+    "openGraph": {
+      "title": "Contact Us - Teatro",
+      "description": "We'd love to hear from you! Whether you have questions, feedback, or just want to say hello, feel free to reach out.",
+      "url": "https://teatro.ge/contact",
+      "siteName": "Teatro",
+      "images": [
+        {
+          "url": "https://teatro.ge/banner.jpg",
+          "width": 1800,
+          "height": 1201,
+          "alt": "Contact Teatro"
+        }
+      ],
+      "locale": "en_US",
+      "type": "website"
+    }
+  },
+  "EventPage": {
+    "Cancel Info 1": "In case the event is canceled, all payments will be refunded in full to the original payment method.",
+    "Cancel Info 2": "You will not need to take any additional action — the refund will be processed automatically."
   }
 }

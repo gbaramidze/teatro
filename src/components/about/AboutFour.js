@@ -8,6 +8,8 @@ import dayjs from "dayjs";
 import 'dayjs/locale/ru';
 import 'dayjs/locale/ka';
 import {useLocale, useTranslations} from "next-intl";
+import "./style.css"
+
 
 const AboutFour = ({events}) => {
   const [isMobile, setIsMobile] = useState()
@@ -25,8 +27,9 @@ const AboutFour = ({events}) => {
 
 
   return (
-    <section className="about-section about-3 py-50 py-lg-100 py-xxl-120">
+    <section className="about-section about-3 py-50 py-lg-100 py-xxl-120 position-relative overflow-hidden">
       <div className="container">
+        <div className={'background-glow'}/>
         {
           events && events.length > 0 && events.map((event, index) => {
               const evenOdd = index % 2 === 0 ? "even" : "odd";
@@ -49,7 +52,7 @@ const AboutFour = ({events}) => {
                       />
                       <SectionDesc
                         desc={event.description}
-                        className={"custom-jakarta custom-font-style-2 mb-0 mt-30"}
+                        className={"mb-0 mt-30 custom-font"}
                       />
                     </div>
 

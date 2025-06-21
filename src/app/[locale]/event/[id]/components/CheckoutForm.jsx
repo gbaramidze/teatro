@@ -1,17 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Button, FloatingLabel, Form, Modal} from 'react-bootstrap';
 import NumberFormat from "@/lib/NumberFormat";
-import {BiCreditCard} from "react-icons/bi";
+import {useTranslations} from "next-intl";
 
-export default function CheckoutModal({ show, handleClose, handleSubmit, isMobile, label, loading }) {
+export default function CheckoutModal({show, handleClose, handleSubmit, isMobile, label, loading}) {
   const [formData, setFormData] = useState({
     firstName: '',
     phone: '',
     email: '',
   });
   const [agreement, setAgreement] = useState(false);
+  const t = useTranslations('checkout');
 
   const [errors, setErrors] = useState({});
 
@@ -32,12 +33,12 @@ export default function CheckoutModal({ show, handleClose, handleSubmit, isMobil
   };
 
   const onChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const {name, value} = e.target;
+    setFormData((prev) => ({...prev, [name]: value}));
 
     // Clear error while typing
     if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: null }));
+      setErrors((prev) => ({...prev, [name]: null}));
     }
   };
 
@@ -55,11 +56,11 @@ export default function CheckoutModal({ show, handleClose, handleSubmit, isMobil
       contentClassName={isMobile ? 'bottom-sheet-content' : ''}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Checkout</Modal.Title>
+        <Modal.Title>{t("Checkout")}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form noValidate>
-          <FloatingLabel controlId="formFirstName" label="Full Name" className="mb-3">
+          <FloatingLabel controlId="formFirstName" label={t("Full Name")} className="mb-3">
             <Form.Control
               type="text"
               name="firstName"
@@ -69,10 +70,10 @@ export default function CheckoutModal({ show, handleClose, handleSubmit, isMobil
               required
               autoFocus
             />
-            <Form.Control.Feedback type="invalid">{errors.firstName}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">{t("Name Required")}</Form.Control.Feedback>
           </FloatingLabel>
 
-          <FloatingLabel controlId="phone" label="Phone (+995)" className="mb-3">
+          <FloatingLabel controlId="phone" label={t("Phone")} className="mb-3">
             <Form.Control
               type="text"
               name="phone"
@@ -81,7 +82,7 @@ export default function CheckoutModal({ show, handleClose, handleSubmit, isMobil
             />
           </FloatingLabel>
 
-          <FloatingLabel controlId="email" label="Email" className="mb-3">
+          <FloatingLabel controlId="email" label={t("Email")} className="mb-3">
             <Form.Control
               type="email"
               name="email"
@@ -90,13 +91,17 @@ export default function CheckoutModal({ show, handleClose, handleSubmit, isMobil
               isInvalid={!!errors.email}
               required
             />
-            <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">{t("Invalid Email")}</Form.Control.Feedback>
           </FloatingLabel>
         </Form>
 
         <div className={"ticket-message"}>
-          By purchasing a ticket, you agree to our <Button variant="link" onClick={() => setAgreement(true)} style={{ margin: 0, padding: 0}}>terms and conditions</Button>
+          {t("Agreement Message")}{" "}
+          <Button variant="link" onClick={() => setAgreement(true)} style={{margin: 0, padding: 0}}>
+            {t("Terms Button")}
+          </Button>
         </div>
+
       </Modal.Body>
       <Modal.Footer>
         <Button
@@ -104,18 +109,31 @@ export default function CheckoutModal({ show, handleClose, handleSubmit, isMobil
           variant="primary"
           onClick={onSubmit}
           disabled={loading}
-          style={{ width: isMobile ? '100%' : 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 222}}
+          style={{
+            width: isMobile ? '100%' : 'auto',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 222
+          }}
         >
 
-          <div style={{display: 'flex', flexDirection: isMobile ? 'row' : 'row', alignItems: 'center', justifyContent: 'flex-start', gap: 5}}>
+          <div style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'row' : 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            gap: 5
+          }}>
 
-            <div style={{ fontSize: 18 }}>
+            <div style={{fontSize: 18}}>
               {NumberFormat(label)} ₾
             </div>
 
-            <div style={{ fontSize: 14, fontWeight: 'normal'}}>
-              Pay now
+            <div style={{fontSize: 14, fontWeight: 'normal'}}>
+              {t("Pay Now")}
             </div>
+
           </div>
 
 
@@ -125,18 +143,17 @@ export default function CheckoutModal({ show, handleClose, handleSubmit, isMobil
 
       <Modal show={agreement} onHide={() => setAgreement(false)} dialogClassName={"modal-dialog-centered"}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            Terms and Conditions
-          </Modal.Title>
+          <Modal.Title>{t("Terms Title")}</Modal.Title>
+
         </Modal.Header>
         <Modal.Body>
           <ul>
-            <li>Venue is strictly 21+. Valid government-issued ID can be required for entry.</li>
-            <li>Face control is enforced. Management reserves the right to deny entry to maintain the venue's atmosphere and dress code.</li>
-            <li>Dress code: Elegant & stylish. We are a luxury lounge and club; please dress accordingly.</li>
-            <li>No refunds will be issued for denied entry due to violation of these terms.</li>
-            <li>Respect the venue, staff, and fellow guests. Any inappropriate behavior may result in removal from the premises.</li>
-            <li>Management reserves all rights.</li>
+            <li>{t("Term1")}</li>
+            <li>{t("Term2")}</li>
+            <li>{t("Term3")}</li>
+            <li>{t("Term4")}</li>
+            <li>{t("Term5")}</li>
+            <li>{t("Term6")}</li>
           </ul>
         </Modal.Body>
       </Modal>

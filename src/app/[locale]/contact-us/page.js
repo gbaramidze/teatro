@@ -1,22 +1,45 @@
-import React from 'react'
 import PageHeader from '@/components/common/PageHeader'
-import Ticket1 from '@/components/tickets/TicketTwo'
 import Direction from '@/components/direction/Direction'
-import Contact from "@/components/contact/Contact";
 import AboutOne from "@/components/about/AboutOne";
+import {getTranslations} from "next-intl/server";
 
-export const metadata = {
-    title: 'Teatro - Contact-us',
-    description: 'Do not hasitate to contact us for any questions or concerns. We are here to assist you with your inquiries and provide the best possible service. Reach out to us via email, phone, or our contact form, and we will respond promptly. Your satisfaction is our priority!',
+export async function generateMetadata() {
+  const t = await getTranslations('contactPage');
+  return {
+    title: t('title'),
+    description: t('description'),
+    keywords: t('keywords'),
+    alternates: {
+      canonical: `/${t('locale')}/contact-us`,
+    },
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      url: t('url'),
+      siteName: t('siteName'),
+      images: [
+        {
+          url: 'https://teatro.ge/banner.jpg',
+          width: 1800,
+          height: 1201,
+          alt: t('title'),
+        },
+      ],
+      type: 'website',
+      locale: t('openGraph.locale'),
+    },
+  }
 }
-const ContactUs = () => {
-    return (
-        <>
-            <PageHeader currentPage={"Contact us"} banner={"banner-1 banner-2"} />
-            <AboutOne />
-            <Direction styleNum={0} />
-        </>
-    )
+
+const ContactUs = async () => {
+  const t = await getTranslations('navigation');
+  return (
+    <>
+      <PageHeader currentPage={t('contact')} banner={"banner-1 banner-2"}/>
+      <AboutOne/>
+      <Direction styleNum={0}/>
+    </>
+  )
 }
 
 export default ContactUs

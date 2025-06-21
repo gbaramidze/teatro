@@ -1,22 +1,23 @@
 import Event from '@/models/Event';
 import connectToDatabase from "@/lib/mongodb";
-import { notFound } from 'next/navigation';
+import {notFound} from 'next/navigation';
 import PageHeader from "@/components/common/PageHeader";
 import React from "react";
-import {Col, Row, Container, Button} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import dayjs from "dayjs";
 import 'dayjs/locale/ru';
 import 'dayjs/locale/ka';
 import dynamic from "next/dynamic";
 import SellTicketActions from "./components/SellTicketActions";
 import {getLocale, getTranslations} from "next-intl/server";
+
 const Share = dynamic(() => import('./Share'), {
   ssr: false,
 });
 
 
-export async function generateMetadata({ params }) {
-  const { id } = params;
+export async function generateMetadata({params}) {
+  const {id} = params;
   await connectToDatabase();
   const event = await Event.findById(id).lean();
   if (!event) return notFound();
@@ -32,8 +33,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function EventPage({ params}) {
-  const { id } = params;
+export default async function EventPage({params}) {
+  const {id} = params;
   const locale = await getLocale();
   dayjs.locale(locale)
   await connectToDatabase();
@@ -83,6 +84,9 @@ export default async function EventPage({ params}) {
     }
   }
 
+  const description = locale === 'ka' ? event['description_ka'] : locale === 'ru' ? event['description_ru'] : event['description'];
+
+
   return (
     <>
       <script
@@ -91,11 +95,11 @@ export default async function EventPage({ params}) {
           __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
         }}
       />
-      <PageHeader currentPage={event.title} isBlogDetails={t("navigation.events")} banner={"banner-1 banner-2"} />
+      <PageHeader currentPage={event.title} isBlogDetails={t("navigation.events")} banner={"banner-1 banner-2"}/>
       <Container className={"mt-5"}>
         <Row>
           <Col xs={12} md={4}>
-            <img src={event.image} alt={event.title} width={'100%'} style={{ borderRadius: 20}}/>
+            <img src={event.image} alt={event.title} width={'100%'} style={{borderRadius: 20}}/>
           </Col>
           <Col className="mt-md-0 mt-4">
             <h1>{event.title}</h1>
@@ -104,15 +108,18 @@ export default async function EventPage({ params}) {
                 {dayjs(event.date).format("dddd DD MMMM, YYYY")}{" "}
               </h3>
             </date>
-            <article>{event.description}</article>
+            <article>{description}</article>
             <SellTicketActions event={event}/>
 
             <div className="mt-4 text-muted text-center text-sm border rounded p-4">
-              In case the event is canceled, all payments will be refunded in full to the original payment method.
-              You will not need to take any additional action — the refund will be processed automatically.
-
+              {t("EventPage.Cancel Info 1")}
+              {t("EventPage.Cancel Info 2")}
             </div>
-            <div style={{ borderBottom: '1px solid #222', margin: '20px 0' }} />
+
+            <div style={{borderBottom: '1px solid #222', margin: '20px 0'}}/>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2494.2980845663624!2d41.596415755486525!3d41.62449260043808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4067850004a59ac9%3A0xa1f9725a6502abfa!2sTEATRO!5e1!3m2!1sru!2sge!4v1750539110835!5m2!1sru!2sge"
+              width="100%" height="150" style={{border: 0}} allowFullScreen={false}/>
             <Share id={id} title={event.title}/>
           </Col>
         </Row>

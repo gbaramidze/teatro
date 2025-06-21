@@ -1,0 +1,38 @@
+.background-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+    pointer-events: none;
+    z-index: -1;
+
+    background: radial-gradient(circle at center, rgba(54, 16, 68, 0.91), rgb(7, 3, 3) 70%), url("/bg3.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /*animation: moveGlow 15s infinite alternate, pulseGlow 10s infinite alternate;*/
+    filter: blur(2px);
+}
+
+
+@keyframes moveGlow {
+    0% {
+        top: -340%;
+        left: -340%;
+    }
+    100% {
+        top: 40%;
+        left: 40%;
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(1deg);
+    }
+}
