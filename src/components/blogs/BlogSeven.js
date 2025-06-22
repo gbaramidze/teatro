@@ -2,7 +2,7 @@
 import React, {useRef} from 'react'
 import Image from 'next/image'
 import {useLocale, useTranslations} from 'next-intl'
-import {Swiper, SwiperSlide} from 'swiper/react';
+import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
 import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -18,6 +18,22 @@ import ellipse_img_1 from "@/assets/images/home-1/ellipse-1.png"
 import dayjs from "dayjs";
 import 'dayjs/locale/ru';
 import 'dayjs/locale/ka';
+import ChevronRght from "@/components/common/icons/ChevronRght";
+import ChevronLeft from "@/components/common/icons/ChevronLeft";
+
+const SwiperButtons = () => {
+  const swiperSlide = useSwiper();
+  return (
+    <div className="swiper-button-progress">
+      <div className="swiper-button-next" onClick={() => swiperSlide.slideNext()}>
+        <ChevronRght/>
+      </div>
+      <div className="swiper-button-prev" onClick={() => swiperSlide.slidePrev()}>
+        <ChevronLeft/>
+      </div>
+    </div>
+  )
+}
 
 const BlogSeven = ({events}) => {
   const t = useTranslations('blog')
@@ -57,6 +73,7 @@ const BlogSeven = ({events}) => {
           <Swiper
             spaceBetween={20}
             className='swiper blog-swiper'
+            loop
             navigation={{
               prevEl: prevRef.current,
               nextEl: nextRef.current,
@@ -82,6 +99,11 @@ const BlogSeven = ({events}) => {
                 spaceBetween: 30,
                 pagination: true,
               },
+              1024: {
+                slidesPerView: 2,
+                slidesPerGroup: 1,
+                spaceBetween: 30,
+              },
             }}
             modules={[Scrollbar, Navigation]}
 
@@ -89,7 +111,7 @@ const BlogSeven = ({events}) => {
             {events.map(({_id, date, image, link, title, ...event}) => (
               <SwiperSlide key={_id} className='swiper-slide'>
                 <BlogCard2
-                  date={dayjs(date).format("DD MMMM 00:00")}
+                  date={dayjs(date).format("D MMMM 00:00")}
                   desc={locale === 'ka' ? event['description_ka'] : locale === 'ru' ? event['description_ru'] : event['description']}
                   img={image}
                   id={_id}
@@ -97,6 +119,7 @@ const BlogSeven = ({events}) => {
                 />
               </SwiperSlide>
             ))}
+            <SwiperButtons/>
           </Swiper>
           <div className="lineup-swiper-pagination"></div>
         </div>
