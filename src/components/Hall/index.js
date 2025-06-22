@@ -284,7 +284,13 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
 
                   {
                     selectedTable && (
-                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        position: 'sticky',
+                        bottom: 0,
+                        backgroundColor: '#04000a'
+                      }}>
                         <div style={{
                           display: 'flex',
                           flexDirection: 'row',
@@ -299,9 +305,10 @@ export default function HallModalEasyPanzoom({show, onHide, eventId, isMobile, o
                           variant="primary"
                           disabled={!selectedTable}
                           onClick={() => onHandleSubmit(selectedTable)}
-                          className={"mt-3 mb-4"}
+                          className={"mt-3 mb-4 btn-gradient"}
                           style={{width: isMobile ? '100%' : 'auto'}}>
                           {selectedTable && (`${totalPrice} ₾`)} {t('buy_now')}
+
                         </Button>
                       </div>
                     )

@@ -1,22 +1,37 @@
 import React from 'react'
 import '@/assets/css/animate.css'
 import '@/assets/scss/style.scss'
-import logo from "@/assets/images/global/favicon.ico"
+import logo from "./favicon.ico"
 import LayoutChildren from '@/lib/layoutChildren'
-import { Open_Sans, Poppins, Plus_Jakarta_Sans, Roboto } from "next/font/google"
+import {Open_Sans, Plus_Jakarta_Sans, Poppins, Roboto} from "next/font/google"
 import {SWRConfig} from "swr";
 import {NextIntlClientProvider} from "next-intl";
-import { routing } from "@/i18n/routing";
-import { getMessages } from "next-intl/server";
+import {routing} from "@/i18n/routing";
+import {getLocale, getMessages} from "next-intl/server";
 import {notFound} from "next/navigation";
-import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
+import {GoogleAnalytics, GoogleTagManager} from '@next/third-parties/google'
 
-export const metadata = {
-  title: 'Teatro',
-  description: 'Lounge and Night club in Batumi, Georgia. Experience the best of live music, DJ performances, and unforgettable events in a vibrant atmosphere. Join us for an extraordinary nightlife experience!',
-  icons: {
-    icon: `${logo.src}`,
-  },
+export async function generateMetadata() {
+  const locale = await getLocale();
+
+  const description = locale === 'en'
+    ? 'Teatro is a night club in Batumi. Show ballet, world-class DJs, live music, and many other events await you. Join us for an unforgettable nightlife experience!'
+    : locale === 'ru'
+      ? 'Театро - это ночной клуб в Батуми. Шоу-балет, мировые диджеи, живая музыка и множество других мероприятий. С нами вас ждет незабываемая ночная жизнь!'
+      : 'თეატრო არის ღამის კლუბი ბათუმში. შოუ ბალეტი, მსოფლიო დიჯეები, ცოცხალი მუსიკა და სხვა მრავალი ღონისძიება. ჩვენთან ერთად თქვენ გელით დაუვიწყარი ღამის ცხოვრება!';
+  const keywords = locale === 'en'
+    ? 'Teatro, Batumi, Georgia, lounge, night club, live music, DJ performances, nightlife, events, entertainment'
+    : locale === 'ru'
+      ? 'Театро, Батуми, Грузия, лаунж, ночной клуб, живая музыка, выступления диджеев, ночная жизнь, мероприятия, развлечения'
+      : 'Teatro, ბათუმი, საქართველო, ლაუნჯი, ღამის კლუბი, ცოცხალი მუსიკა, დიჯეის შესრულებები, ღამის ცხოვრება, ღონისძიებები, გასართობი';
+  return {
+    title: 'Teatro',
+    description,
+    keywords,
+    icons: {
+      icon: `${logo.src}`,
+    },
+  }
 }
 
 export const viewport = {
@@ -57,30 +72,32 @@ const roboto = Roboto({
   adjustFontFallback: false
 })
 
-export default async function RootLayout({ children, params }) {
-  const { locale } = await params;
+export default async function RootLayout({children, params}) {
+  const {locale} = await params;
   if (!routing.locales.includes(locale)) {
     notFound();
   }
   const messages = await getMessages();
   return (
-    <html lang="en" className={`${open_sans.variable} ${plus_jakarta_sans.variable} ${poppins.variable} ${roboto.variable} `}>
-    <GoogleTagManager gtmId="G-3Q2DTX49VS" />
-    <GoogleAnalytics gaId="G-3Q2DTX49VS" />
+    <html lang={locale}
+          className={`${open_sans.variable} ${plus_jakarta_sans.variable} ${poppins.variable} ${roboto.variable} `}>
+    <meta name="apple-mobile-web-app-title" content="Teatro"/>
+    <GoogleTagManager gtmId="G-3Q2DTX49VS"/>
+    <GoogleAnalytics gaId="G-3Q2DTX49VS"/>
 
     <body suppressHydrationWarning={true}>
-      <NextIntlClientProvider locale={locale || "en"} messages={messages}>
-        <LayoutChildren>
-            <SWRConfig
-              value={{
-                refreshInterval: 5000,
-              }}
-            >
-              {children}
-            </SWRConfig>
-          </LayoutChildren>
-      </NextIntlClientProvider>
-      </body>
+    <NextIntlClientProvider locale={locale || "en"} messages={messages}>
+      <LayoutChildren>
+        <SWRConfig
+          value={{
+            refreshInterval: 5000,
+          }}
+        >
+          {children}
+        </SWRConfig>
+      </LayoutChildren>
+    </NextIntlClientProvider>
+    </body>
     </html>
   )
 }

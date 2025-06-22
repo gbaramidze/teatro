@@ -1,4 +1,3 @@
-
 import NavbarOne from "@/components/common/navbars/NavbarOne";
 import FooterOne from "@/components/common/footers/FooterOne";
 import React from "react";
@@ -14,32 +13,32 @@ import BlogSeven from "@/components/blogs/BlogSeven";
 import HighlightThree from "@/components/highlights/HighlightThree"; // Adjust the path as necessary
 
 const Page = async () => {
-      await connectToDatabase();
-      const events = await Event.find({ visible: true }).lean();
-      return (
-        <>
-              <NavbarOne />
-              <BannerEight />
-              <Stories />
-              <BlogSeven events={events.map(event => ({
-                ...event,
-                  _id: event._id.toString(),
-                seatingOverrides: event.seatingOverrides ? event.seatingOverrides.map(so => ({
-                  ...so,
-                  tableId: so.tableId.toString(),
-                  _id: so._id.toString()
-                })) : [],
-              }))}/>
+  await connectToDatabase();
+  const events = await Event.find({visible: true}).lean();
+  return (
+    <>
+      <NavbarOne/>
+      <BannerEight/>
+      <Stories/>
+      <BlogSeven events={events.map(event => ({
+        ...event,
+        _id: event._id.toString(),
+        seatingOverrides: event.seatingOverrides ? event.seatingOverrides.map(so => ({
+          ...so,
+          tableId: so.tableId.toString(),
+          _id: so._id.toString()
+        })) : [],
+      }))}/>
 
-              <LineupOne />
+      <LineupOne/>
 
-              <HighlightThree styleNum={2} />
-              {/*<TicketOne styleNum={0} />*/}
-              <Gallery styleNum={0}/>
-              <Cta styleNum={0} />
-              <SubscriptionOne styleNum={0} />
-              <FooterOne />
-        </>
-      )
+      <HighlightThree styleNum={2}/>
+      {/*<TicketOne styleNum={0} />*/}
+      <Gallery styleNum={0}/>
+      <Cta styleNum={0}/>
+      <SubscriptionOne styleNum={0}/>
+      <FooterOne/>
+    </>
+  )
 }
 export default Page

@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Allow: /
+
+# black-listed-bot
+User-agent: black-listed-bot
+Disallow: /admin
+
+# Host
+Host: https://teatro.ge
+
+# Sitemaps
+Sitemap: https://teatro.ge/sitemap.xml
