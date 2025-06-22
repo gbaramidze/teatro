@@ -43,7 +43,7 @@ const SendTicket = async (ticketId) => {
               <img src="https://teatro.ge/api/qr/${ticket.ticketNumber}" alt="QR Code" style="width:100px;height:100px;" />
               <div style="color:#aaa;font-size:12px;margin-top:8px;">${ticket.ticketNumber}</div>
             </div>
-            <div>
+            <div style="margin-left: 12px">
               <p><strong>Name:</strong> ${tempTicket.fullName}</p>
               <p><strong>Place:</strong> ${table?.label || '-'} – ${table?.floor || '-'} floor</p>
               <p><strong>Ticket ID:</strong> ${ticket.ticketNumber}</p>
@@ -56,6 +56,12 @@ const SendTicket = async (ticketId) => {
 
     html += `
       <div style="text-align:center;margin-top:40px;">
+      <a href="https://teatro.ge/api/calendar?id=${tempTicket._id}" 
+         style="display:inline-block;background:#816009;color:#fff;text-decoration:none;
+                padding:10px 20px;border-radius:6px;font-weight:bold;margin-bottom:20px">
+        📅 Add to Calendar
+      </a>
+      <br />
         <img src="https://teatro.ge/logo.png" alt="Logo" style="height:30px"/>
         <p style="font-size:12px;color:#888;margin-top:10px">
           This is an automated ticket from Teatro. Please do not reply.

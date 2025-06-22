@@ -6,7 +6,7 @@ import {useSearchParams} from "next/navigation";
 import EntryTicket from "@/components/EntryTicket";
 
 
-`const LoadingPayment = () => {
+const LoadingPayment = () => {
   return (
     <div>
       <dotlottie-player
@@ -23,7 +23,7 @@ import EntryTicket from "@/components/EntryTicket";
               type="module"></script>
     </div>
   )
-}`
+}
 const SuccessPayment = () => {
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
