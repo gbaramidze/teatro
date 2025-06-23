@@ -1,57 +1,41 @@
-import React, {useState} from "react";
-import {IoMdClose} from "react-icons/io";
-import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import React from "react";
+import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 const EvModal = ({setModalIsOpen, url, type, currentId, images}) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(currentId);
-
-  const nextImage = () => {
-    if (type === "image") {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }
-  };
-
-  const prevImage = () => {
-    if (type === "image") {
-      setCurrentImageIndex((prevIndex) => prevIndex === 0 ? images.length - 1 : prevIndex - 1);
-    }
-  };
-
-  // Close modal event
-  const closeEvModal = () => {
-    setModalIsOpen(false);
-  };
-  return (
-    <div className="ev-modal">
-      <div className="ev-modal-container">
-        <button className="ev-close-btn" onClick={closeEvModal}>
-          <i><IoMdClose/></i>
-        </button>
-        {
-          type === "video" ?
-            <div className="">
-              <iframe className="iframe" src={url} controls
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; allowfullscreen"/>
-            </div> :
-            <div className="ev-modal-img">
-              <img src={images[currentImageIndex]?.thumb} alt={`Image ${currentImageIndex + 1}`} width={'90vw'}/>
-              <p className="ev-counter">{currentImageIndex} of {images?.length}</p>
-            </div>
-        }
-
-      </div>
-      {
-        type === "image" && <div className="ev-action-btn">
-          <button className="ev-prev-button " onClick={prevImage}>
-            <AiFillCaretLeft/>
+  if (type === "video") {
+    return (
+      <div className="ev-modal">
+        <div className="ev-modal-container">
+          <button className="ev-close-btn" onClick={() => setModalIsOpen(false)}>
+            ✕
           </button>
-          <button className="ev-next-button" onClick={nextImage}>
-            <AiFillCaretRight/>
-          </button>
+          <div className="">
+            <iframe
+              className="iframe"
+              src={url}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
         </div>
-      }
-    </div>
+      </div>
+    );
+  }
+
+  // Transform image data to Lightbox format
+  const slides = images.map(img => ({
+    src: img?.src || img?.thumb, // assumes 'thumb' or 'src' available
+  }));
+
+  return (
+    <Lightbox
+      open={true}
+      close={() => setModalIsOpen(false)}
+      slides={slides}
+      index={currentId}
+      carousel={{finite: false}}
+    />
   );
 };
 
