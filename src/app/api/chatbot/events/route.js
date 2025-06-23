@@ -1,6 +1,9 @@
 import {NextResponse} from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import Event from '@/models/Event';
+import dayjs from "dayjs";
+import 'dayjs/locale/ru';
+import 'dayjs/locale/ka';
 
 export async function GET(request) {
   await connectToDatabase();
@@ -28,13 +31,14 @@ export async function GET(request) {
     }
 
     const events = await Event.find({visible: true}).sort({date: 1}).lean();
+    dayjs.locale(locale)
 
     const formatted = events.map((e) => {
       const description = locale === 'ru' ? e.description_ru : locale === 'ka' ? e.description_ka : e.description;
       return {
         id: e._id,
         title: e.title,
-        date: e.date,
+        date: dayjs(e.date).format('dddd DD MMMM, YYYY 00:00'),
         location: e.location,
         image: e.image || null,
         link: `https://teatro.ge/event/${e._id}`,
