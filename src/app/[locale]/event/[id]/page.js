@@ -51,7 +51,7 @@ export default async function EventPage({params}) {
     image: event.image,
     description: event.description,
     eventStatus: "https://schema.org/EventScheduled",
-    "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     startDate: `${dayjs(event.date).format("YYYY-MM-DDT00:00:00")}`,
     endDate: `${dayjs(event.date).add(1, 'day').format("YYYY-MM-DDT06:00:00")}`,
     location: {
