@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {IoMdClose} from "react-icons/io";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import "yet-another-react-lightbox/styles.css";
 
 const EvModal = ({setModalIsOpen, url, type, currentId, images}) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(currentId);

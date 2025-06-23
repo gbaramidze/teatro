@@ -31,7 +31,6 @@ export async function GET(req, context) {
 
     return new Response(JSON.stringify(links), {status: 200});
   } catch (err) {
-    console.error("S3 error:", err);
-    return new Response(JSON.stringify({error: "Failed to fetch links"}), {status: 500});
+    return new Response(JSON.stringify([]), {status: 200});
   }
 }
