@@ -7,6 +7,7 @@ export async function GET(request) {
 
   const {searchParams} = new URL(request.url);
   const id = searchParams.get('id');
+  const locale = searchParams.get('locale') || 'en';
 
   try {
     if (id) {
@@ -22,21 +23,24 @@ export async function GET(request) {
         location: event.location,
         image: event.image || null,
         link: `https://teatro.ge/event/${event._id}`,
-        description: event.description,
+        description: description,
       });
     }
 
-    const events = await Event.find({}).sort({date: 1}).lean();
+    const events = await Event.find({visible: true}).sort({date: 1}).lean();
 
-    const formatted = events.map((e) => ({
-      id: e._id,
-      title: e.title,
-      date: e.date,
-      location: e.location,
-      image: e.image || null,
-      link: `https://teatro.ge/event/${e._id}`,
-      description: e.description?.slice(0, 160) || '',
-    }));
+    const formatted = events.map((e) => {
+      const description = locale === 'ru' ? e.description_ru : locale === 'ka' ? e.description_ka : e.description;
+      return {
+        id: e._id,
+        title: e.title,
+        date: e.date,
+        location: e.location,
+        image: e.image || null,
+        link: `https://teatro.ge/event/${e._id}`,
+        description: description?.slice(0, 160) || '',
+      }
+    });
 
     return NextResponse.json({events: formatted});
   } catch (err) {
