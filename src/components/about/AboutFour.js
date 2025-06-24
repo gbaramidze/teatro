@@ -57,7 +57,7 @@ const AboutFour = ({events}) => {
                     </div>
 
                     <div className="d-block d-md-flex gap-4 mb-4">
-                      <ButtonFill className={"btn-rounded"} link={`/event/${event._id}`}>
+                      <ButtonFill className={"btn-rounded"} link={`/event/${event.title.replace(/ /g, '-').toLowerCase()}`}>
                         <TicketIcon height={"25"} width={"25"}/>
                         {t('buy_ticket')}
                       </ButtonFill>

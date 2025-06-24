@@ -10,6 +10,7 @@ import 'dayjs/locale/ka';
 import dynamic from "next/dynamic";
 import SellTicketActions from "./components/SellTicketActions";
 import {getLocale, getTranslations} from "next-intl/server";
+import mongoose from 'mongoose';
 
 const Share = dynamic(() => import('./Share'), {
   ssr: false,
@@ -19,8 +20,21 @@ const Share = dynamic(() => import('./Share'), {
 export async function generateMetadata({params}) {
   const {id} = params;
   await connectToDatabase();
-  const event = await Event.findById(id).lean();
-  if (!event) return notFound();
+  const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
+
+// Попробовать найти по ObjectId
+  let event = isValidObjectId
+    ? await Event.findById(id).lean()
+    : null;
+
+  if (!event) {
+    const titleSlug = id.replace(/-/g, ' ');
+
+    event = await Event.findOne({
+      visible: true,
+      title: new RegExp(`^${titleSlug}$`, 'i') // регистронезависимый поиск
+    }).lean();
+  }
 
   return {
     title: event.title,
@@ -38,7 +52,22 @@ export default async function EventPage({params}) {
   const locale = await getLocale();
   dayjs.locale(locale)
   await connectToDatabase();
-  const event = await Event.findById(id).lean();
+
+  const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
+
+// Попробовать найти по ObjectId
+  let event = isValidObjectId
+    ? await Event.findById(id).lean()
+    : null;
+
+  if (!event) {
+    const titleSlug = id.replace(/-/g, ' ');
+
+    event = await Event.findOne({
+      visible: true,
+      title: new RegExp(`^${titleSlug}$`, 'i') // регистронезависимый поиск
+    }).lean();
+  }
 
   const t = await getTranslations();
 

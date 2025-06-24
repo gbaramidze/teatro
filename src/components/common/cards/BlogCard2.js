@@ -65,7 +65,8 @@ const BlogCard2 = ({img, date, desc, id, title}) => {
               </h2>
               <EllipsisText>{desc}</EllipsisText>
               <div>
-                <Link href={`/event/${id}`} className="download-link d-flex align-items-center gap-30"
+                <Link href={`/event/${title.replace(/ /g, '-').toLowerCase()}`}
+                      className="download-link d-flex align-items-center gap-30"
                       aria-label="buttons">{t('buy_ticket')} <TopUpArrow className={"ticket-arrow"} height={"32"}
                                                                          width={"32"}/> </Link>
               </div>

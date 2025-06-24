@@ -35,7 +35,7 @@ export async function generateMetadata() {
 const Venue = async () => {
   const t = await getTranslations('navigation');
   await connectToDatabase();
-  const events = await Event.find({visible: true}).lean();
+  const events = await Event.find({visible: true}).sort({date: 1}).lean();
   const locale = await getLocale();
   return (
     <>

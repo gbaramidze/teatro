@@ -46,5 +46,5 @@ export async function GET() {
 async function getDynamicPaths() {
   await connectToDatabase();
   const events = await Event.find({visible: true}).lean();
-  return events.map((event) => event._id.toString()); // Преобразуем ObjectId в строку
+  return events.map((event) => event.title.replace(/ /g, '-').toLowerCase()); // Преобразуем ObjectId в строку
 }
