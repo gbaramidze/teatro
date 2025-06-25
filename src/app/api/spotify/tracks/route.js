@@ -58,6 +58,11 @@ export async function GET(request) {
     return Response.json({artist: artist.name, tracks});
   } catch (error) {
     console.error('Spotify error:', error);
-    return Response.json({error: 'Internal server error', serverError: error, id: process.env.SPOTIFY_CLIENT_ID}, {status: 500});
+    return Response.json({
+      error: 'Internal server error',
+      id: process.env.SPOTIFY_CLIENT_ID,
+      url: `https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist&limit=1`,
+      serverError: error.message
+    }, {status: 500});
   }
 }
