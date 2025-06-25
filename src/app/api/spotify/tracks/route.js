@@ -60,7 +60,10 @@ export async function GET(request) {
     console.error('Spotify error:', error);
     return Response.json({
       error: 'Internal server error',
-      id: process.env.SPOTIFY_CLIENT_ID,
+      spotifyCredentials: {
+        clientId: process.env.SPOTIFY_CLIENT_ID || 'Not set',
+        clientSecret: process.env.SPOTIFY_CLIENT_SECRET || 'Not set',
+      },
       url: `https://api.spotify.com/v1/search?q=${encodeURIComponent(artistName)}&type=artist&limit=1`,
       serverError: error.message
     }, {status: 500});
