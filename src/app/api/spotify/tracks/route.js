@@ -58,6 +58,6 @@ export async function GET(request) {
     return Response.json({artist: artist.name, tracks});
   } catch (error) {
     console.error('Spotify error:', error);
-    return Response.json({error: 'Internal server error', serverError: error}, {status: 500});
+    return Response.json({error: 'Internal server error', serverError: error, id: process.env.SPOTIFY_CLIENT_ID}, {status: 500});
   }
 }
