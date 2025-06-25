@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import SellTicketActions from "./components/SellTicketActions";
 import {getLocale, getTranslations} from "next-intl/server";
 import mongoose from 'mongoose';
+import SpotifyTracksEmbed from "@/components/Player";
 
 const Share = dynamic(() => import('./Share'), {
   ssr: false,
@@ -129,7 +130,8 @@ export default async function EventPage({params}) {
       <Container className={"mt-5"}>
         <Row>
           <Col xs={12} md={4}>
-            <img src={event.image} alt={event.title} width={'100%'} style={{borderRadius: 20}}/>
+            <img src={event.image} alt={event.title} width={'100%'}
+                 style={{borderRadius: 20, top: 120, position: 'sticky'}}/>
           </Col>
           <Col className="mt-md-0 mt-4">
             <h1>{event.title}</h1>
@@ -151,6 +153,8 @@ export default async function EventPage({params}) {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2494.2980845663624!2d41.596415755486525!3d41.62449260043808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4067850004a59ac9%3A0xa1f9725a6502abfa!2sTEATRO!5e1!3m2!1sru!2sge!4v1750539110835!5m2!1sru!2sge"
               width="100%" height="150" style={{border: 0}} allowFullScreen={false}/>
             <Share id={id} title={event.title}/>
+
+            <SpotifyTracksEmbed artistName={event.title.replace(/ /g, '-')}/>
           </Col>
         </Row>
 
