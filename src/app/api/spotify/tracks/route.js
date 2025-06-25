@@ -13,7 +13,7 @@ export async function GET(request) {
     const tokenRes = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {
-        'Authorization': 'Basic ' + Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64'),
+        'Authorization': 'Basic ' + Buffer.from(`cb2b8f007df9482b9b21f923131eee39:a1756a16c6df4775b67f221f81cc0401`).toString('base64'),
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: 'grant_type=client_credentials',
