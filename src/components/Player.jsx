@@ -25,8 +25,8 @@ const SpotifyTracksEmbed = ({artistName}) => {
     fetchTracks();
   }, [artistName]);
 
-  if (loading) return <p>Загрузка треков для {artistName}...</p>;
-  if (!tracks.length) return <p>Нет треков для исполнителя: {artistName}</p>;
+  if (loading) return null;
+  if (!tracks.length) return null;
 
   return (
     <div style={{
