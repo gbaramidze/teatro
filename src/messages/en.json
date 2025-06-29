@@ -62,6 +62,7 @@
   },
   "events": {
     "buy_ticket": "Buy Ticket",
+    "program": "Program for",
     "meta": {
       "title": "Event calendar - Teatro",
       "description": "Teatro is a Lounge and Nightclub in Batumi, Georgia. Experience the best of live music, DJ performances, and unforgettable events in a vibrant atmosphere. Join us for an extraordinary nightlife experience!",

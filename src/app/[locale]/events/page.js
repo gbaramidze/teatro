@@ -6,6 +6,7 @@ import Event from "@/models/Event";
 import PageHeader from "@/components/common/PageHeader";
 import HighlightThree from "@/components/highlights/HighlightThree";
 import {getLocale, getTranslations} from "next-intl/server";
+import DateSwiper from "@/app/[locale]/event/[id]/components/xz";
 
 export async function generateMetadata() {
   const t = await getTranslations('events.meta');
@@ -40,6 +41,11 @@ const Venue = async () => {
   return (
     <>
       <PageHeader currentPage={(t('events'))} banner={"banner-1 banner-2"}/>
+      <DateSwiper mainEvents={events.map(event => ({
+        ...event,
+        description: locale === 'ka' ? event['description_ka'] : locale === 'ru' ? event['description_ru'] : event['description'],
+      }))}/>
+
       <AboutFour events={events.map(event => ({
         ...event,
         description: locale === 'ka' ? event['description_ka'] : locale === 'ru' ? event['description_ru'] : event['description'],

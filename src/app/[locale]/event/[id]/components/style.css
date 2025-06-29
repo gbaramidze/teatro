@@ -3,9 +3,53 @@
     gap: 12px;
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
     .eventButtons {
         flex-direction: column;
         gap: 10px;
     }
+}
+
+.custom-date-box {
+    background-color: #222;
+    /*border: 1px solid gold;*/
+    color: gold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    padding: 4px;
+    min-width: 42px;
+    max-width: 46px;
+    /*margin: auto;*/
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+.custom-date-box:hover {
+    background-color: #222;
+    color: #fff;
+}
+
+.custom-date-box.selected {
+    background-color: gold !important;
+    color: black !important;
+    font-weight: bold;
+    border-color: #fff;
+}
+
+.date-month {
+    font-size: 10px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.date-weekday {
+    font-size: 11px;
+    margin-top: 1px;
+}
+
+.date-day {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 2px;
 }
