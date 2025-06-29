@@ -10,6 +10,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import './style.css';
 import {useLocale, useTranslations} from "next-intl";
+import {BiChevronLeft, BiChevronRight} from "react-icons/bi";
 
 const getMainEventForDate = (fullDate, mainEvents) => {
   return mainEvents.find(
@@ -54,7 +55,6 @@ const DateSwiper = ({mainEvents}) => {
   const t = useTranslations('events');
   const dates = generateDates(60);
   const [selectedDate, setSelectedDate] = useState(dates[0].fullDate);
-
   const mainEvent = getMainEventForDate(selectedDate, mainEvents);
   const isMainEventDay = !!mainEvent;
   const defaultEvents = isMainEventDay ? [] : getScheduleByDate(selectedDate);
@@ -62,33 +62,55 @@ const DateSwiper = ({mainEvents}) => {
 
   return (
     <div className="container py-3 text-light">
-      <Swiper
-        modules={[FreeMode]}
-        slidesPerView={7}
-        slidesPerGroup={7}
-        spaceBetween={0}
-        breakpoints={{
-          320: {slidesPerView: 7, slidesPerGroup: 7, spaceBetween: 0},
-          768: {slidesPerView: 14, slidesPerGroup: 14, spaceBetween: 4},
-          1024: {slidesPerView: 21, slidesPerGroup: 21, spaceBetween: 4},
-        }}
-        className="mb-3"
-      >
-        {dates.map((date) => (
-          <SwiperSlide key={date.fullDate} style={{width: 'auto'}}>
-            <div
-              className={`custom-date-box text-center ${
-                selectedDate === date.fullDate ? 'selected' : ''
-              }`}
-              onClick={() => setSelectedDate(date.fullDate)}
-            >
-              <div className="date-month">{date.month}</div>
-              <div className="date-weekday">{date.weekday}</div>
-              <div className="date-day">{date.day}</div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className="datepicker">
+        <div className={"flex datepicker-header"}>
+          <div className="flex-grow-1">
+            {dayjs(selectedDate).format('MMMM YYYY')}
+          </div>
+          <div className="date-controls">
+            <div><BiChevronLeft/></div>
+            <div>Today</div>
+            <div><BiChevronRight/></div>
+          </div>
+        </div>
+        <Swiper
+          modules={[FreeMode]}
+          slidesPerView={7}
+          slidesPerGroup={7}
+          spaceBetween={0}
+          grabCursor
+          breakpoints={{
+            320: {slidesPerView: 7, slidesPerGroup: 7, spaceBetween: 0},
+            768: {slidesPerView: 14, slidesPerGroup: 14, spaceBetween: 4},
+            1024: {slidesPerView: 21, slidesPerGroup: 21, spaceBetween: 4},
+          }}
+          className="mb-3"
+          onSlideChange={(swiper) => {
+            setSelectedDate(dates[swiper.activeIndex].fullDate);
+          }}
+        >
+          {dates.map((date) => (
+            <SwiperSlide key={date.fullDate} style={{width: '100%', flexShrink: 'unset'}} className={"slide"}>
+              <div
+                className={`custom-date-box text-center ${
+                  selectedDate === date.fullDate ? 'selected' : ''
+                }`}
+                onClick={() => setSelectedDate(date.fullDate)}
+              >
+                {/*<div className="date-month">{date.month}</div>*/}
+                <div className="date-weekday">{date.weekday}</div>
+                <div className="date-day">
+                  <div className="day">{date.day}</div>
+                  <div className="mbs">
+                    <div
+                      className={`mbs-inner ${getMainEventForDate(date.fullDate, mainEvents) ? 'special' : ''}`}/>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
 
       {defaultEvents.length > 0 && (
         <div className="mt-3 px-2">
